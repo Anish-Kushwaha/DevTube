@@ -115,9 +115,38 @@
     .about-card ul { list-style: none; }
     .about-card li + li { border-top: 1px solid var(--border); margin-top: 10px; padding-top: 10px; }
 
+
+    .bottom-nav {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      bottom: 0;
+      display: none;
+      height: 58px;
+      justify-content: space-around;
+      left: 0;
+      position: fixed;
+      right: 0;
+      z-index: 30;
+    }
+    .bottom-nav a {
+      align-items: center;
+      color: var(--text);
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      font-size: 10px;
+      gap: 2px;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .bottom-nav a.active { color: #fff; font-weight: 800; }
+    .bottom-nav .material-icons, .bottom-nav .material-icons-outlined { font-size: 23px; }
+    .bottom-upload .material-icons-outlined { font-size: 34px; }
+
     @media (max-width: 1000px) {
       .sidebar { display: none; }
       .channel-shell { padding: 0 16px 84px; }
+      .bottom-nav { display: flex; }
       .topbar-left, .topbar-right { min-width: auto; }
       .channel-header { grid-template-columns: 120px minmax(0, 1fr); }
       .avatar-wrap { height: 120px; width: 120px; }
@@ -272,5 +301,14 @@
       </div>
     </main>
   </div>
+
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a href="index.html"><span class="material-icons">home</span><span>Home</span></a>
+    <a href="index.html#shorts"><span class="material-icons-outlined">bolt</span><span>Shorts</span></a>
+    <a class="bottom-upload" href="upload.html"><span class="material-icons-outlined">add_circle</span><span>Upload</span></a>
+    <a href="index.html#subscriptions"><span class="material-icons-outlined">subscriptions</span><span>Subs</span></a>
+    <a class="active" href="channel.html"><span class="material-icons-outlined">account_circle</span><span>You</span></a>
+  </nav>
+
 </body>
 </html>
