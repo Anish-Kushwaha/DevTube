@@ -651,7 +651,7 @@
       shorts = foundShorts;
       console.log(`DevTube scan complete: found ${videos.length} videos and ${shorts.length} shorts.`);
 
-      status.innerHTML = `<span class="material-icons-outlined">cloud_done</span><span><strong>Scan complete.</strong> Found ${videos.length} video${videos.length === 1 ? '' : 's'} and ${shorts.length} short${shorts.length === 1 ? '' : 's'}. Upload Videos/VideoX.mp4, Shorts/ShortX.mp4, and optional thumbnails/VideoX.jpg/png/webp to update automatically.</span>`;
+      status.innerHTML = `<span class="material-icons-outlined">cloud_done</span><span><strong>Scan complete.</strong> Found ${videos.length} video${videos.length === 1 ? '' : 's'} and ${shorts.length} short${shorts.length === 1 ? '' : 's'}. Searching for uploaded videos.</span>`;
       renderVideos();
       renderShorts();
     }
