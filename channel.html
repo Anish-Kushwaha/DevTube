@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f0f0f">
+  <title>DevTube - Anish Kushwaha Channel</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #181818;
+      --surface-2: #212121;
+      --surface-3: #272727;
+      --text: #f1f1f1;
+      --muted: #aaa;
+      --muted-2: #717171;
+      --border: #303030;
+      --brand: #ff0033;
+      --blue: #3ea6ff;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: Roboto, "Segoe UI", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .topbar {
+      align-items: center;
+      background: rgba(15, 15, 15, 0.98);
+      display: flex;
+      gap: 16px;
+      height: 56px;
+      justify-content: space-between;
+      padding: 0 16px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .topbar-left, .topbar-center, .topbar-right { align-items: center; display: flex; }
+    .topbar-left { gap: 12px; min-width: 210px; }
+    .icon-button { align-items: center; background: transparent; border: 0; border-radius: 50%; color: var(--text); cursor: pointer; display: inline-flex; height: 40px; justify-content: center; width: 40px; }
+    .icon-button:hover { background: var(--surface-3); }
+    .brand { align-items: center; display: flex; font-size: 21px; font-weight: 900; gap: 7px; letter-spacing: -0.6px; white-space: nowrap; }
+    .brand i { color: var(--brand); font-size: 26px; }
+    .brand span { color: white; }
+    .search { align-items: center; background: #121212; border: 1px solid var(--border); border-radius: 999px; display: flex; flex: 1; max-width: 640px; overflow: hidden; }
+    .search input { background: transparent; border: 0; color: var(--text); flex: 1; min-width: 0; outline: 0; padding: 10px 16px; }
+    .search button { align-items: center; background: #222; border: 0; border-left: 1px solid var(--border); color: var(--text); cursor: pointer; display: flex; height: 40px; justify-content: center; width: 64px; }
+    .topbar-center { flex: 1; justify-content: center; min-width: 120px; }
+    .topbar-right { gap: 4px; min-width: 150px; justify-content: flex-end; }
+    .mini-avatar { background: #333 center / cover no-repeat; background-image: url('Anish.png'); border-radius: 50%; height: 32px; width: 32px; }
+
+    .layout { display: flex; }
+    .sidebar { background: var(--bg); flex: 0 0 240px; min-height: calc(100vh - 56px); padding: 10px 4px 20px 0; position: sticky; top: 56px; }
+    .nav-item { align-items: center; border-radius: 10px; display: flex; gap: 22px; margin: 1px 8px; min-height: 42px; padding: 9px 16px; }
+    .nav-item:hover, .nav-item.active { background: var(--surface-3); }
+    .nav-item .material-icons, .nav-item .material-icons-outlined { font-size: 23px; }
+    .content { flex: 1; min-width: 0; }
+    .channel-shell { margin: 0 auto; max-width: 1284px; padding: 0 24px 48px; }
+    .banner {
+      background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.36), transparent 18%), linear-gradient(120deg, #111827 0%, #312e81 35%, #e11d48 72%, #f97316 100%);
+      border-radius: 0 0 16px 16px;
+      height: clamp(130px, 16vw, 230px);
+      overflow: hidden;
+      position: relative;
+    }
+    .banner::after { background: linear-gradient(90deg, rgba(0,0,0,0.18), transparent 40%, rgba(0,0,0,0.22)); content: ""; inset: 0; position: absolute; }
+    .banner-text { bottom: 22px; left: 28px; position: absolute; z-index: 1; }
+    .banner-text h1 { font-size: clamp(24px, 5vw, 54px); letter-spacing: -1.5px; line-height: 1; }
+    .banner-text p { color: rgba(255,255,255,0.82); font-size: 15px; margin-top: 7px; }
+
+    .channel-header { align-items: flex-start; display: grid; gap: 24px; grid-template-columns: 160px minmax(0, 1fr) auto; padding: 28px 0 18px; }
+    .avatar-wrap { background: var(--surface-2); border-radius: 50%; height: 160px; overflow: hidden; position: relative; width: 160px; }
+    .avatar-wrap img { display: block; height: 100%; object-fit: cover; width: 100%; }
+    .avatar-fallback { align-items: center; background: linear-gradient(135deg, #7c3aed, #ec4899, #f97316); color: white; display: none; font-size: 54px; font-weight: 900; height: 100%; justify-content: center; width: 100%; }
+    .channel-info { min-width: 0; padding-top: 4px; }
+    .channel-title { font-size: clamp(32px, 5vw, 48px); font-weight: 900; letter-spacing: -1.5px; line-height: 1.05; }
+    .channel-meta { color: var(--muted); font-size: 14px; line-height: 1.6; margin-top: 8px; }
+    .channel-meta strong { color: var(--text); font-weight: 700; }
+    .channel-bio { color: var(--text); font-size: 15px; line-height: 1.55; margin-top: 12px; max-width: 760px; }
+    .links-row { align-items: center; display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; }
+    .channel-link { color: var(--blue); font-size: 14px; font-weight: 700; }
+    .channel-link:hover { text-decoration: underline; }
+    .actions { align-items: center; display: flex; flex-wrap: wrap; gap: 10px; padding-top: 10px; }
+    .subscribe { background: white; border: 0; border-radius: 999px; color: #0f0f0f; cursor: pointer; font-weight: 800; padding: 10px 16px; }
+    .join { background: var(--surface-3); border: 0; border-radius: 999px; color: var(--text); cursor: pointer; font-weight: 700; padding: 10px 16px; }
+
+    .tabs { align-items: center; border-bottom: 1px solid var(--border); display: flex; gap: 28px; overflow-x: auto; scrollbar-width: none; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { color: var(--muted); flex: 0 0 auto; font-size: 14px; font-weight: 800; padding: 16px 0 14px; position: relative; text-transform: uppercase; }
+    .tab.active { color: var(--text); }
+    .tab.active::after { background: var(--text); border-radius: 999px 999px 0 0; bottom: 0; content: ""; height: 3px; left: 0; position: absolute; right: 0; }
+
+    .section { border-bottom: 1px solid var(--border); padding: 28px 0; }
+    .section h2 { font-size: 21px; margin-bottom: 16px; }
+    .featured { display: grid; gap: 20px; grid-template-columns: minmax(280px, 460px) minmax(0, 1fr); }
+    .featured-thumb { align-items: center; aspect-ratio: 16 / 9; background: linear-gradient(135deg, #27272a, #111827); border-radius: 12px; display: flex; justify-content: center; overflow: hidden; position: relative; }
+    .featured-thumb img { height: 100%; object-fit: cover; width: 100%; }
+    .play { align-items: center; background: rgba(0,0,0,0.68); border-radius: 50%; display: flex; height: 58px; justify-content: center; left: 50%; position: absolute; top: 50%; transform: translate(-50%, -50%); width: 58px; }
+    .featured-copy h3 { font-size: 20px; line-height: 1.35; margin-bottom: 8px; }
+    .featured-copy p { color: var(--muted); line-height: 1.65; margin-bottom: 12px; }
+    .video-row { display: grid; gap: 16px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .video-card { min-width: 0; }
+    .video-thumb { align-items: center; aspect-ratio: 16 / 9; background: linear-gradient(135deg, #2563eb, #7c3aed, #e11d48); border-radius: 12px; display: flex; font-size: 26px; font-weight: 900; justify-content: center; margin-bottom: 10px; overflow: hidden; position: relative; }
+    .video-thumb img { height: 100%; object-fit: cover; width: 100%; }
+    .duration { background: rgba(0,0,0,.86); border-radius: 4px; bottom: 7px; font-size: 12px; font-weight: 800; padding: 3px 5px; position: absolute; right: 7px; }
+    .video-title { display: -webkit-box; font-size: 15px; font-weight: 800; line-height: 1.35; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+    .video-meta { color: var(--muted); font-size: 13px; line-height: 1.5; margin-top: 4px; }
+    .about-grid { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr) 320px; }
+    .about-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+    .about-card h3 { font-size: 18px; margin-bottom: 12px; }
+    .about-card p, .about-card li { color: var(--muted); line-height: 1.7; }
+    .about-card ul { list-style: none; }
+    .about-card li + li { border-top: 1px solid var(--border); margin-top: 10px; padding-top: 10px; }
+
+    @media (max-width: 1000px) {
+      .sidebar { display: none; }
+      .channel-shell { padding: 0 16px 84px; }
+      .topbar-left, .topbar-right { min-width: auto; }
+      .channel-header { grid-template-columns: 120px minmax(0, 1fr); }
+      .avatar-wrap { height: 120px; width: 120px; }
+      .actions { grid-column: 2; padding-top: 0; }
+      .video-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 680px) {
+      .topbar { gap: 8px; padding: 0 10px; }
+      .topbar-center { display: none; }
+      .brand { font-size: 19px; }
+      .channel-header { gap: 14px; grid-template-columns: 84px minmax(0, 1fr); padding-top: 18px; }
+      .avatar-wrap { height: 84px; width: 84px; }
+      .avatar-fallback { font-size: 32px; }
+      .channel-title { font-size: 28px; }
+      .actions { grid-column: 1 / -1; }
+      .featured, .about-grid { grid-template-columns: 1fr; }
+      .video-row { grid-template-columns: 1fr; }
+      .tabs { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="icon-button" aria-label="Menu"><span class="material-icons">menu</span></button>
+      <a class="brand" href="index.html" aria-label="DevTube home"><i class="fa-brands fa-studiovinari"></i><span>DevTube</span></a>
+    </div>
+    <div class="topbar-center">
+      <form class="search" action="index.html" method="get">
+        <input name="search" type="search" placeholder="Search" aria-label="Search">
+        <button type="submit" aria-label="Search"><span class="material-icons">search</span></button>
+      </form>
+    </div>
+    <div class="topbar-right">
+      <a class="icon-button" href="upload.html" aria-label="Create"><span class="material-icons-outlined">video_call</span></a>
+      <button class="icon-button" aria-label="Notifications"><span class="material-icons-outlined">notifications</span></button>
+      <div class="mini-avatar" role="img" aria-label="Anish Kushwaha avatar"></div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="YouTube-style channel navigation">
+      <a class="nav-item" href="index.html"><span class="material-icons">home</span><span>Home</span></a>
+      <a class="nav-item" href="index.html#shorts"><span class="material-icons-outlined">bolt</span><span>Shorts</span></a>
+      <a class="nav-item active" href="channel.html"><span class="material-icons-outlined">account_circle</span><span>Your channel</span></a>
+      <a class="nav-item" href="upload.html"><span class="material-icons-outlined">upload</span><span>Upload</span></a>
+      <a class="nav-item" href="settings.html"><span class="material-icons-outlined">settings</span><span>Settings</span></a>
+    </aside>
+
+    <main class="content">
+      <div class="channel-shell">
+        <section class="banner" aria-label="Channel banner">
+          <div class="banner-text">
+            <h1>Anish Kushwaha</h1>
+            <p>Admin channel of DevTube</p>
+          </div>
+        </section>
+
+        <section class="channel-header" aria-label="Channel summary">
+          <div class="avatar-wrap">
+            <img src="Anish.png" alt="Anish Kushwaha" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="avatar-fallback">A</div>
+          </div>
+          <div class="channel-info">
+            <h1 class="channel-title">Anish Kushwaha</h1>
+            <div class="channel-meta"><strong>@Anishkushwaha_dev</strong> · DevTube Admin · Videos, shorts, coding, business, and updates</div>
+            <p class="channel-bio">it's the Admins Channel of DevTube.</p>
+            <div class="links-row" aria-label="Official channel links">
+              <a class="channel-link" href="https://www.youtube.com/@Anishkushwaha_dev" target="_blank" rel="noopener noreferrer">YouTube: @Anishkushwaha_dev</a>
+              <span aria-hidden="true">·</span>
+              <a class="channel-link" href="https://www.youtube.com/@Anish.Enterprises_dev" target="_blank" rel="noopener noreferrer">ANISH ENTERPRISES: @Anish.Enterprises_dev</a>
+            </div>
+          </div>
+          <div class="actions">
+            <a class="join" href="https://www.youtube.com/@Anishkushwaha_dev" target="_blank" rel="noopener noreferrer">Visit YouTube</a>
+            <a class="subscribe" href="https://www.youtube.com/@Anishkushwaha_dev?sub_confirmation=1" target="_blank" rel="noopener noreferrer">Subscribe</a>
+          </div>
+        </section>
+
+        <nav class="tabs" aria-label="Channel tabs">
+          <a class="tab active" href="#home">Home</a>
+          <a class="tab" href="#videos">Videos</a>
+          <a class="tab" href="#shorts">Shorts</a>
+          <a class="tab" href="#playlists">Playlists</a>
+          <a class="tab" href="#community">Community</a>
+          <a class="tab" href="#about">About</a>
+        </nav>
+
+        <section class="section" id="home">
+          <h2>Featured</h2>
+          <div class="featured">
+            <a class="featured-thumb" href="index.html#home" aria-label="Watch featured DevTube video">
+              <img src="thumbnails/Video1.jpg" alt="Featured DevTube upload" onerror="this.style.display='none';">
+              <span class="play"><span class="material-icons">play_arrow</span></span>
+            </a>
+            <div class="featured-copy">
+              <h3>Welcome to the official DevTube admin channel</h3>
+              <p>Explore automatically synced videos and shorts uploaded directly to this GitHub repository. This channel page is styled like a modern YouTube channel while staying fully static and GitHub Pages friendly.</p>
+              <p><a class="channel-link" href="https://www.youtube.com/@Anishkushwaha_dev" target="_blank" rel="noopener noreferrer">Open Anish Kushwaha on YouTube</a></p>
+              <p><a class="channel-link" href="https://www.youtube.com/@Anish.Enterprises_dev" target="_blank" rel="noopener noreferrer">Open ANISH ENTERPRISES on YouTube</a></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="videos">
+          <h2>Videos</h2>
+          <div class="video-row">
+            <a class="video-card" href="index.html#home">
+              <div class="video-thumb"><img src="thumbnails/Video1.jpg" alt="Video 1 thumbnail" onerror="this.style.display='none';"><span class="duration">10:00</span></div>
+              <div class="video-title">Video 1</div>
+              <div class="video-meta">DevTube · Recently uploaded</div>
+            </a>
+            <a class="video-card" href="index.html#home">
+              <div class="video-thumb">Video 2<span class="duration">10:00</span></div>
+              <div class="video-title">Upcoming DevTube upload</div>
+              <div class="video-meta">Uploads sync automatically from GitHub</div>
+            </a>
+            <a class="video-card" href="index.html#shorts">
+              <div class="video-thumb">Shorts<span class="duration">0:30</span></div>
+              <div class="video-title">Shorts collection</div>
+              <div class="video-meta">Shorts/ShortX.mp4</div>
+            </a>
+            <a class="video-card" href="upload.html">
+              <div class="video-thumb">Upload<span class="duration">New</span></div>
+              <div class="video-title">Upload new media</div>
+              <div class="video-meta">Add files to GitHub and refresh</div>
+            </a>
+          </div>
+        </section>
+
+        <section class="section" id="about">
+          <h2>About</h2>
+          <div class="about-grid">
+            <div class="about-card">
+              <h3>Bio</h3>
+              <p>it's the Admins Channel of DevTube.</p>
+              <p style="margin-top:12px;">Official links:</p>
+              <p><a class="channel-link" href="https://www.youtube.com/@Anishkushwaha_dev" target="_blank" rel="noopener noreferrer">https://www.youtube.com/@Anishkushwaha_dev</a></p>
+              <p><a class="channel-link" href="https://www.youtube.com/@Anish.Enterprises_dev" target="_blank" rel="noopener noreferrer">https://www.youtube.com/@Anish.Enterprises_dev</a></p>
+            </div>
+            <div class="about-card">
+              <h3>Channel details</h3>
+              <ul>
+                <li><strong>Handle</strong><br>@Anishkushwaha_dev</li>
+                <li><strong>Role</strong><br>DevTube Admin</li>
+                <li><strong>Company</strong><br>ANISH ENTERPRISES</li>
+                <li><strong>Platform</strong><br>DevTube + YouTube</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
