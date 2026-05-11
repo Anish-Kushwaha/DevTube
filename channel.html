@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f0f0f">
+  <title>DevTube - Channel</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root { color-scheme: dark; --bg:#0f0f0f; --card:#1f1f1f; --text:#f1f1f1; --muted:#aaa; --border:#333; --brand:#ff0033; --blue:#3ea6ff; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { align-items: center; background: radial-gradient(circle at 10% 10%, rgba(255,0,51,.18), transparent 32%), var(--bg); color: var(--text); display: flex; font-family: Roboto, "Segoe UI", Arial, sans-serif; min-height: 100vh; padding: 24px; }
+    main { background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid var(--border); border-radius: 24px; box-shadow: 0 24px 80px rgba(0,0,0,.45); margin: auto; max-width: 760px; padding: clamp(28px, 5vw, 56px); width: 100%; }
+    .logo { align-items: center; color: var(--text); display: inline-flex; font-size: 22px; font-weight: 900; gap: 8px; margin-bottom: 42px; text-decoration: none; }
+    .logo i { color: var(--brand); font-size: 30px; }
+    .icon { color: var(--brand); font-size: 56px; margin-bottom: 18px; }
+    h1 { font-size: clamp(34px, 8vw, 62px); letter-spacing: -2px; line-height: .95; margin-bottom: 16px; }
+    p { color: var(--muted); font-size: 18px; line-height: 1.7; max-width: 620px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    a.button { align-items: center; background: #272727; border-radius: 999px; color: var(--text); display: inline-flex; gap: 8px; padding: 12px 16px; text-decoration: none; }
+    a.button.primary { background: var(--text); color: #0f0f0f; font-weight: 800; }
+    code { background: rgba(255,255,255,.08); border-radius: 6px; padding: 2px 6px; }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="logo" href="index.html"><i class="fa-brands fa-studiovinari"></i><span>DevTube</span></a>
+    <div class="material-icons-outlined icon">account_circle</div>
+    <h1>Channel</h1>
+    <p>Your channel page is ready for profile details, playlists, and featured uploads.</p>
+    <p style="margin-top:14px;">This page is intentionally standalone. Replace or extend this file anytime; <code>index.html</code> checks for it with a HEAD request and marks it live automatically.</p>
+    <div class="actions">
+      <a class="button primary" href="index.html"><span class="material-icons-outlined">home</span> Back to DevTube</a>
+      <a class="button" href="upload.html"><span class="material-icons-outlined">upload</span> Upload guide</a>
+    </div>
+  </main>
+</body>
+</html>
