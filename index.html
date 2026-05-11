@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevTube - Home</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #0f0f0f;
+            --header-bg: rgba(15, 15, 15, 0.98);
+            --text-color: #f1f1f1;
+            --secondary-text: #aaaaaa;
+            --hover-color: #272727;
+            --border-color: #3f3f3f;
+            --blue-accent: #3ea6ff;
+            --red-brand: #ff0000;
+            --search-bg: #121212;
+            --dropdown-bg: #282828;
+            --chip-bg: #272727;
+            --chip-active: #f1f1f1;
+            --chip-active-text: #0f0f0f;
+            --accent-purple: #7c3aed;
+            --accent-pink: #ec4899;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #888; }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            height: 56px;
+            background-color: var(--header-bg);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-left { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+        .icon-btn {
+            cursor: pointer; padding: 8px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-color); transition: background-color 0.2s;
+            background: none; border: none; position: relative;
+        }
+        .icon-btn:hover { background-color: var(--hover-color); }
+        .icon-btn .badge {
+            position: absolute; top: 4px; right: 4px; width: 8px; height: 8px;
+            background-color: var(--red-brand); border-radius: 50%; border: 2px solid var(--bg-color);
+        }
+
+        .logo {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 21px; font-weight: 700; letter-spacing: -0.5px;
+            cursor: pointer; text-decoration: none; color: var(--text-color); white-space: nowrap;
+        }
+        .logo .fa-studiovinari { color: var(--red-brand); font-size: 24px; }
+        .logo sup { font-size: 10px; color: var(--secondary-text); margin-left: 2px; }
+
+        .header-middle {
+            display: flex; align-items: center; flex: 0 1 720px; gap: 12px;
+            margin: 0 40px; min-width: 200px;
+        }
+
+        .search-container {
+            display: flex; flex: 1; align-items: center;
+            background-color: var(--search-bg); border: 1px solid var(--border-color);
+            border-radius: 40px; overflow: hidden; transition: border-color 0.2s;
+        }
+        .search-container:focus-within { border-color: #1c62b9; box-shadow: 0 0 0 1px #1c62b9; }
+        .search-container input {
+            flex: 1; background-color: transparent; border: none;
+            color: var(--text-color); padding: 10px 16px; font-size: 16px; outline: none; min-width: 0;
+        }
+        .search-container input::placeholder { color: #888; }
+        .search-btn {
+            background-color: #222; border: none; border-left: 1px solid var(--border-color);
+            color: var(--text-color); padding: 0 20px; height: 40px; cursor: pointer;
+            display: flex; align-items: center; flex-shrink: 0; transition: background-color 0.2s;
+        }
+        .search-btn:hover { background-color: var(--hover-color); }
+        .mic-btn {
+            background-color: #181818; border: none; color: var(--text-color);
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            transition: background-color 0.2s;
+        }
+        .mic-btn:hover { background-color: var(--hover-color); }
+
+        .header-right { display: flex; align-items: center; gap: 4px; position: relative; flex-shrink: 0; }
+        .profile-pic {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; cursor: pointer; margin-left: 8px; font-size: 14px;
+            transition: transform 0.2s;
+        }
+        .profile-pic:hover { transform: scale(1.08); }
+
+        /* Dropdowns */
+        .dropdown-menu {
+            position: absolute; top: 100%; right: 0;
+            background-color: var(--dropdown-bg); border-radius: 12px;
+            width: 300px; padding: 8px 0; margin-top: 10px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.7); display: none;
+            flex-direction: column; z-index: 300; border: 1px solid var(--border-color);
+        }
+        .dropdown-menu.active { display: flex; }
+        .dropdown-menu.wide { width: 380px; }
+
+        .dropdown-header {
+            display: flex; gap: 16px; padding: 16px;
+            border-bottom: 1px solid var(--border-color); align-items: center;
+        }
+        .dropdown-header .profile-pic { width: 44px; height: 44px; margin: 0; font-size: 18px; }
+        .dropdown-user-info { display: flex; flex-direction: column; gap: 2px; }
+        .dropdown-user-name { font-size: 16px; font-weight: 500; }
+        .dropdown-user-handle { font-size: 13px; color: var(--secondary-text); }
+        .dropdown-user-link {
+            font-size: 13px; color: var(--blue-accent); cursor: pointer; margin-top: 2px; font-weight: 500;
+        }
+        .dropdown-user-link:hover { text-decoration: underline; }
+
+        .dropdown-item {
+            display: flex; align-items: center; gap: 16px; padding: 10px 16px;
+            cursor: pointer; font-size: 14px; transition: background-color 0.15s; color: var(--text-color);
+        }
+        .dropdown-item:hover { background-color: rgba(255,255,255,0.08); }
+        .dropdown-item .material-icons-outlined, .dropdown-item .material-icons { font-size: 20px; flex-shrink: 0; }
+        .dropdown-divider { height: 1px; background: var(--border-color); margin: 8px 0; }
+
+        /* Layout */
+        .main-container { display: flex; flex: 1; overflow: hidden; position: relative; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px; background-color: var(--bg-color);
+            overflow-y: auto; overflow-x: hidden; padding-right: 4px;
+            transition: width 0.25s ease; display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .sidebar.collapsed { width: 72px; padding-right: 0; }
+
+        .sidebar-section { padding: 8px 0; border-bottom: 1px solid var(--border-color); }
+        .sidebar-section:last-child { border-bottom: none; }
+        .sidebar-section-title {
+            padding: 8px 24px; font-size: 15px; font-weight: 600; color: var(--text-color);
+        }
+        .sidebar.collapsed .sidebar-section-title { display: none; }
+
+        .sidebar-link {
+            display: flex; align-items: center; padding: 10px 16px; cursor: pointer;
+            border-radius: 10px; margin: 1px 8px; transition: background-color 0.2s;
+            white-space: nowrap; color: var(--text-color); text-decoration: none; gap: 20px;
+        }
+        .sidebar.collapsed .sidebar-link {
+            flex-direction: column; padding: 14px 0; gap: 5px; margin: 1px 0;
+            border-radius: 0; justify-content: center; text-align: center;
+        }
+        .sidebar-link:hover { background-color: var(--hover-color); }
+        .sidebar-link.active { background-color: var(--hover-color); font-weight: 600; }
+        .sidebar-link .material-icons, .sidebar-link .material-icons-outlined { font-size: 22px; flex-shrink: 0; }
+        .sidebar.collapsed .sidebar-link .material-icons, .sidebar.collapsed .sidebar-link .material-icons-outlined { margin-right: 0; }
+        .sidebar-text {
+            font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .sidebar.collapsed .sidebar-text { font-size: 10px; text-align: center; max-width: 60px; }
+
+        /* Content area */
+        .content-area { flex: 1; background-color: var(--bg-color); display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+        .category-chips {
+            display: flex; gap: 10px; padding: 10px 24px; background-color: var(--header-bg);
+            position: sticky; top: 0; z-index: 10; overflow-x: auto; scrollbar-width: none; flex-shrink: 0; align-items: center;
+        }
+        .category-chips::-webkit-scrollbar { display: none; }
+        .chip {
+            background-color: var(--chip-bg); color: var(--text-color); padding: 7px 14px;
+            border-radius: 8px; font-size: 14px; cursor: pointer; white-space: nowrap;
+            transition: all 0.2s; border: none; font-family: inherit; flex-shrink: 0;
+        }
+        .chip:hover { background-color: #3f3f3f; }
+        .chip.active { background-color: var(--chip-active); color: var(--chip-active-text); font-weight: 500; }
+
+        .scrollable-content { flex: 1; overflow-y: auto; padding: 20px 24px 40px; scroll-behavior: smooth; }
+        .page { display: none; animation: fadeSlideIn 0.25s ease; }
+        .page.active { display: block; }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Video grid */
+        .video-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            column-gap: 16px; row-gap: 36px;
+        }
+        .video-card {
+            display: flex; flex-direction: column; cursor: pointer; text-decoration: none;
+            color: inherit; transition: transform 0.15s; border-radius: 12px; padding: 4px;
+        }
+        .video-card:hover { transform: translateY(-3px); }
+        .video-card:active { transform: scale(0.98); }
+
+        .thumbnail {
+            width: 100%; aspect-ratio: 16/9; background-color: #1e1e1e;
+            border-radius: 12px; margin-bottom: 10px; position: relative;
+            background-size: cover; background-position: center; overflow: hidden;
+            transition: border-radius 0.25s;
+        }
+        .video-card:hover .thumbnail { border-radius: 6px; }
+        .thumbnail-placeholder {
+            display: flex; align-items: center; justify-content: center;
+            width: 100%; height: 100%; font-size: clamp(20px, 4vw, 48px);
+            font-weight: 800; letter-spacing: -1px; color: rgba(255,255,255,0.85);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5); position: absolute; top: 0; left: 0; pointer-events: none;
+        }
+        .timestamp {
+            position: absolute; bottom: 8px; right: 8px;
+            background-color: rgba(0,0,0,0.85); color: #fff;
+            font-size: 12px; font-weight: 600; padding: 3px 6px; border-radius: 5px; z-index: 2;
+        }
+
+        .video-info { display: flex; gap: 12px; padding-right: 8px; }
+        .channel-avatar {
+            width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+            background-size: cover; background-position: center; cursor: pointer; transition: transform 0.2s;
+        }
+        .channel-avatar:hover { transform: scale(1.1); }
+
+        .video-details { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+        .video-title {
+            font-size: 15px; font-weight: 500; color: var(--text-color);
+            margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;
+        }
+        .channel-name { font-size: 13px; color: var(--secondary-text); display: flex; align-items: center; gap: 4px; margin-bottom: 1px; }
+        .channel-name:hover { color: #d1d1d1; }
+        .channel-name .material-icons { font-size: 13px; color: #888; }
+        .video-stats { font-size: 13px; color: var(--secondary-text); }
+
+        /* Shorts grid */
+        .shorts-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .shorts-header .material-icons { color: var(--red-brand); font-size: 28px; }
+        .shorts-header h2 { font-size: 22px; font-weight: 700; }
+        .shorts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+        .short-card { cursor: pointer; transition: transform 0.15s; border-radius: 12px; padding: 4px; }
+        .short-card:hover { transform: translateY(-3px); }
+        .short-thumbnail {
+            width: 100%; aspect-ratio: 9/16; background-color: #1e1e1e;
+            border-radius: 12px; margin-bottom: 8px; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; transition: border-radius 0.25s;
+        }
+        .short-card:hover .short-thumbnail { border-radius: 6px; }
+        .short-thumbnail .thumbnail-placeholder { font-size: clamp(16px, 3vw, 32px); font-weight: 700; }
+        .short-title {
+            font-size: 15px; font-weight: 500; margin-bottom: 4px;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .short-views { font-size: 13px; color: var(--secondary-text); }
+
+        /* Watch page */
+        .video-player {
+            width: 100%; max-width: 900px; aspect-ratio: 16/9;
+            background: #000; border-radius: 12px; overflow: hidden;
+        }
+        .video-player video { width: 100%; height: 100%; object-fit: contain; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sidebar { width: 72px; padding-right: 0; }
+            .sidebar-section-title { display: none; }
+            .sidebar-link { flex-direction: column; padding: 14px 0; gap: 5px; margin: 1px 0; border-radius: 0; }
+            .sidebar-link .material-icons, .sidebar-link .material-icons-outlined { margin-right: 0; }
+            .sidebar-text { font-size: 10px; text-align: center; max-width: 60px; }
+            .video-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .bottom-nav { display: flex; }
+            .main-container { padding-bottom: 56px; }
+            .header-middle { display: none; }
+            .header-right .search-mobile { display: flex; }
+            .video-grid { grid-template-columns: 1fr; row-gap: 20px; }
+            .video-card .thumbnail { border-radius: 0; margin-left: -24px; margin-right: -24px; width: calc(100% + 48px); }
+            .video-card:hover .thumbnail { border-radius: 0; }
+            .scrollable-content { padding: 12px 16px 40px; }
+            .shorts-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+            .category-chips { padding: 8px 12px; gap: 6px; }
+            .chip { padding: 6px 10px; font-size: 12px; }
+        }
+
+        @media (min-width: 769px) { .header-right .search-mobile { display: none; } }
+        @media (max-width: 480px) {
+            .shorts-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .video-grid { row-gap: 16px; }
+        }
+
+        .bottom-nav {
+            display: none; justify-content: space-around; align-items: center;
+            background-color: var(--bg-color); border-top: 1px solid var(--border-color);
+            height: 56px; position: fixed; bottom: 0; width: 100%; z-index: 200;
+        }
+        .bottom-nav-item {
+            display: flex; flex-direction: column; align-items: center;
+            color: var(--text-color); font-size: 10px; cursor: pointer; gap: 3px; padding: 4px 12px;
+        }
+        .bottom-nav-item.active { color: #fff; }
+        .bottom-nav-item .material-icons, .bottom-nav-item .material-icons-outlined { font-size: 22px; }
+        .bottom-nav-center .material-icons-outlined { font-size: 40px; color: #fff; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <button class="icon-btn menu-icon" onclick="toggleSidebar()"><span class="material-icons">menu</span></button>
+            <a href="#" class="logo" onclick="switchPage('home'); return false;">
+                <i class="fa-brands fa-studiovinari"></i><span>DevTube</span><sup>IN</sup>
+            </a>
+        </div>
+
+        <div class="header-middle">
+            <div class="search-container">
+                <input type="text" placeholder="Search" id="searchInput" onkeydown="if(event.key==='Enter')handleSearch()">
+                <button class="search-btn" onclick="handleSearch()"><span class="material-icons-outlined">search</span></button>
+            </div>
+            <button class="mic-btn"><span class="material-icons">mic</span></button>
+        </div>
+
+        <div class="header-right">
+            <button class="icon-btn search-mobile" onclick="toggleMobileSearch()"><span class="material-icons-outlined">search</span></button>
+            <button class="icon-btn" onclick="window.location.href='upload.html'"><span class="material-icons-outlined">video_call</span></button>
+            <button class="icon-btn" onclick="toggleDropdown('notifications-dropdown')"><span class="material-icons-outlined">notifications</span><span class="badge"></span></button>
+            <div class="profile-pic" onclick="toggleDropdown('account-dropdown')">A</div>
+
+            <div class="dropdown-menu" id="account-dropdown">
+                <div class="dropdown-header">
+                    <div class="profile-pic">A</div>
+                    <div class="dropdown-user-info">
+                        <span class="dropdown-user-name">Anish Kushwaha</span>
+                        <span class="dropdown-user-handle">@anishkushwaha_dev</span>
+                        <span class="dropdown-user-link" onclick="window.location.href='channel.html'">View your channel</span>
+                    </div>
+                </div>
+                <div class="dropdown-item" onclick="window.location.href='accounts.html'"><span class="material-icons-outlined">account_box</span>Google Account</div>
+                <div class="dropdown-item"><span class="material-icons-outlined">switch_account</span>Switch account<span class="material-icons-outlined" style="margin-left:auto;">chevron_right</span></div>
+                <div class="dropdown-item"><span class="material-icons-outlined">logout</span>Sign out</div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item" onclick="window.location.href='purchases.html'"><span class="material-icons-outlined">monetization_on</span>Purchases and memberships</div>
+                <div class="dropdown-item" onclick="window.location.href='data.html'"><span class="material-icons-outlined">admin_panel_settings</span>Your data in DevTube</div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item"><span class="material-icons-outlined">brightness_2</span>Appearance: Dark theme</div>
+                <div class="dropdown-item" onclick="window.location.href='settings.html'"><span class="material-icons-outlined">settings</span>Settings</div>
+                <div class="dropdown-item" onclick="window.location.href='policy.html'"><span class="material-icons-outlined">policy</span>Terms & Policy</div>
+            </div>
+
+            <div class="dropdown-menu wide" id="notifications-dropdown">
+                <div style="padding:16px;font-size:16px;font-weight:600;border-bottom:1px solid var(--border-color);">Notifications</div>
+                <div style="padding:40px 32px;text-align:center;color:var(--secondary-text);">
+                    <span class="material-icons-outlined" style="font-size:56px;margin-bottom:16px;opacity:0.4;display:block;">notifications_off</span>
+                    <p style="font-weight:500;">Your notifications live here</p>
+                    <p style="font-size:12px;margin-top:8px;">Subscribe to favorite channels to get notified.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-link active" onclick="switchPage('home')" data-page="home"><span class="material-icons">home</span><span class="sidebar-text">Home</span></div>
+                <div class="sidebar-link" onclick="switchPage('shorts')" data-page="shorts"><span class="material-icons-outlined">bolt</span><span class="sidebar-text">Shorts</span></div>
+                <div class="sidebar-link" onclick="switchPage('subscriptions')" data-page="subscriptions"><span class="material-icons-outlined">subscriptions</span><span class="sidebar-text">Subscriptions</span></div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">You</div>
+                <div class="sidebar-link" onclick="window.location.href='channel.html'"><span class="material-icons-outlined">account_circle</span><span class="sidebar-text">Your channel</span></div>
+                <div class="sidebar-link" onclick="switchPage('history')" data-page="history"><span class="material-icons-outlined">history</span><span class="sidebar-text">History</span></div>
+                <div class="sidebar-link" onclick="switchPage('playlists')" data-page="playlists"><span class="material-icons-outlined">playlist_play</span><span class="sidebar-text">Playlists</span></div>
+                <div class="sidebar-link" onclick="switchPage('watch-later')" data-page="watch-later"><span class="material-icons-outlined">watch_later</span><span class="sidebar-text">Watch later</span></div>
+                <div class="sidebar-link" onclick="switchPage('liked')" data-page="liked"><span class="material-icons-outlined">thumb_up</span><span class="sidebar-text">Liked videos</span></div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Explore</div>
+                <div class="sidebar-link" onclick="switchPage('trending')" data-page="trending"><span class="material-icons-outlined">local_fire_department</span><span class="sidebar-text">Trending</span></div>
+                <div class="sidebar-link" onclick="switchPage('music')" data-page="music"><span class="material-icons-outlined">music_note</span><span class="sidebar-text">Music</span></div>
+                <div class="sidebar-link" onclick="switchPage('gaming')" data-page="gaming"><span class="material-icons-outlined">sports_esports</span><span class="sidebar-text">Gaming</span></div>
+                <div class="sidebar-link" onclick="switchPage('news')" data-page="news"><span class="material-icons-outlined">newspaper</span><span class="sidebar-text">News</span></div>
+                <div class="sidebar-link" onclick="switchPage('sports')" data-page="sports"><span class="material-icons-outlined">sports_soccer</span><span class="sidebar-text">Sports</span></div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">More</div>
+                <div class="sidebar-link" onclick="window.location.href='settings.html'"><span class="material-icons-outlined">settings</span><span class="sidebar-text">Settings</span></div>
+                <div class="sidebar-link" onclick="window.location.href='accounts.html'"><span class="material-icons-outlined">manage_accounts</span><span class="sidebar-text">Account</span></div>
+                <div class="sidebar-link" onclick="window.location.href='policy.html'"><span class="material-icons-outlined">policy</span><span class="sidebar-text">Policy & Terms</span></div>
+                <div class="sidebar-link" onclick="window.location.href='about.html'"><span class="material-icons-outlined">info</span><span class="sidebar-text">About</span></div>
+            </div>
+        </nav>
+
+        <main class="content-area">
+            <div class="category-chips" id="categoryChips">
+                <button class="chip active" onclick="filterChips(this)">All</button>
+                <button class="chip" onclick="filterChips(this)">Gaming</button>
+                <button class="chip" onclick="filterChips(this)">Music</button>
+                <button class="chip" onclick="filterChips(this)">Live</button>
+                <button class="chip" onclick="filterChips(this)">Programming</button>
+                <button class="chip" onclick="filterChips(this)">Podcasts</button>
+                <button class="chip" onclick="filterChips(this)">Mixes</button>
+                <button class="chip" onclick="filterChips(this)">Recently uploaded</button>
+            </div>
+
+            <div class="scrollable-content" id="scrollableContent">
+                <div id="home-page" class="page active"><div class="video-grid" id="home-grid"><p style="color:var(--secondary-text);">Scanning for videos...</p></div></div>
+                <div id="shorts-page" class="page">
+                    <div class="shorts-header"><span class="material-icons">bolt</span><h2>Shorts</h2></div>
+                    <div class="shorts-grid" id="shorts-grid"><p style="color:var(--secondary-text);">Scanning for shorts...</p></div>
+                </div>
+                <div id="subscriptions-page" class="page">
+                    <div class="shorts-header"><span class="material-icons-outlined">subscriptions</span><h2>Subscriptions</h2></div>
+                    <div class="video-grid" id="subs-grid"><p style="color:var(--secondary-text);">No subscriptions yet.</p></div>
+                </div>
+                <div id="watch-page" class="page"><div id="watch-content"></div></div>
+
+                <!-- Placeholder pages (internal) -->
+                <div id="history-page" class="page"><div class="shorts-header"><span class="material-icons-outlined">history</span><h2>History</h2></div><p style="color:var(--secondary-text);">Coming soon.</p></div>
+                <div id="playlists-page" class="page"><div class="shorts-header"><span class="material-icons-outlined">playlist_play</span><h2>Playlists</h2></div><p style="color:var(--secondary-text);">Coming soon.</p></div>
+                <div id="watch-later-page" class="page"><div class="shorts-header"><span class="material-icons-outlined">watch_later</span><h2>Watch Later</h2></div><p style="color:var(--secondary-text);">Coming soon.</p></div>
+                <div id="liked-page" class="page"><div class="shorts-header"><span class="material-icons-outlined">thumb_up</span><h2>Liked Videos</h2></div><p style="color:var(--secondary-text);">Coming soon.</p></div>
+                <div id="trending-page" class="page"><div class="shorts-header"><span class="material-icons-outlined">local_fire_department</span><h2>Trending</h2></div><p style="color:var(--secondary-text);">Coming soon.</p></div>
+                <div id="music-page" class="page"><div class="shorts-header"><span class="material-icons-outlined">music_note</span><h2>Music</h2></div><p style="color:var(--secondary-text);">Coming soon.</p></div>
+                <div id="gaming-page" class="page"><div class="shorts-header"><span class="material-icons-outlined">sports_esports</span><h2>Gaming</h2></div><p style="color:var(--secondary-text);">Coming soon.</p></div>
+                <div id="news-page" class="page"><div class="shorts-header"><span class="material-icons-outlined">newspaper</span><h2>News</h2></div><p style="color:var(--secondary-text);">Coming soon.</p></div>
+                <div id="sports-page" class="page"><div class="shorts-header"><span class="material-icons-outlined">sports_soccer</span><h2>Sports</h2></div><p style="color:var(--secondary-text);">Coming soon.</p></div>
+            </div>
+        </main>
+    </div>
+
+    <nav class="bottom-nav" id="bottomNav">
+        <div class="bottom-nav-item active" onclick="switchPage('home')" data-page="home"><span class="material-icons">home</span><span>Home</span></div>
+        <div class="bottom-nav-item" onclick="switchPage('shorts')" data-page="shorts"><span class="material-icons-outlined">bolt</span><span>Shorts</span></div>
+        <div class="bottom-nav-item bottom-nav-center" onclick="window.location.href='upload.html'"><span class="material-icons-outlined">add_circle</span></div>
+        <div class="bottom-nav-item" onclick="switchPage('subscriptions')" data-page="subscriptions"><span class="material-icons-outlined">subscriptions</span><span>Subs</span></div>
+        <div class="bottom-nav-item" onclick="window.location.href='channel.html'"><div class="profile-pic" style="width:24px;height:24px;margin:0;font-size:11px;">A</div><span>You</span></div>
+    </nav>
+
+    <script>
+        // -------------------- CONFIGURATION --------------------
+        const REPO_BASE = ''; // Leave empty if files are at root, else e.g. '/DevTube'
+        const MAX_VIDEOS_SCAN = 50;
+        const MAX_SHORTS_SCAN = 30;
+        const THUMBNAILS_PATH = 'thumbnails/';
+        const VIDEOS_PATH = 'Videos/';
+        const SHORTS_PATH = 'Shorts/';
+        const VIDEO_EXT = '.mp4';
+        const THUMB_EXT = '.jpg';
+
+        // -------------------- GLOBAL STATE --------------------
+        let homeVideos = [];
+        let shortsList = [];
+        let currentFilter = 'All';
+
+        // -------------------- AUTO-DETECTION LOGIC --------------------
+        async function checkFileExists(url) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                return response.ok;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        async function scanMedia() {
+            const homeGrid = document.getElementById('home-grid');
+            const shortsGrid = document.getElementById('shorts-grid');
+
+            // Scan videos
+            homeVideos = [];
+            for (let i = 1; i <= MAX_VIDEOS_SCAN; i++) {
+                const thumbUrl = `${REPO_BASE}/${THUMBNAILS_PATH}Video${i}${THUMB_EXT}`;
+                if (await checkFileExists(thumbUrl)) {
+                    homeVideos.push({
+                        id: i,
+                        title: `Video ${i}`,
+                        thumbnail: thumbUrl,
+                        videoUrl: `${REPO_BASE}/${VIDEOS_PATH}Video${i}${VIDEO_EXT}`,
+                        channel: 'DevTube',
+                        views: Math.floor(Math.random() * 500 + 10) + 'K views',
+                        time: 'Recently uploaded',
+                        duration: '10:00',
+                        category: 'All'
+                    });
+                }
+            }
+
+            // Scan shorts
+            shortsList = [];
+            for (let i = 1; i <= MAX_SHORTS_SCAN; i++) {
+                const thumbUrl = `${REPO_BASE}/${THUMBNAILS_PATH}Short${i}${THUMB_EXT}`;
+                if (await checkFileExists(thumbUrl)) {
+                    shortsList.push({
+                        id: i,
+                        title: `Short ${i}`,
+                        thumbnail: thumbUrl,
+                        videoUrl: `${REPO_BASE}/${SHORTS_PATH}Short${i}${VIDEO_EXT}`,
+                        views: Math.floor(Math.random() * 9 + 1) + 'M views'
+                    });
+                }
+            }
+
+            // Render grids
+            renderHomeGrid();
+            renderShortsGrid();
+        }
+
+        // -------------------- RENDER FUNCTIONS --------------------
+        function renderHomeGrid() {
+            const grid = document.getElementById('home-grid');
+            const filtered = currentFilter === 'All' ? homeVideos : homeVideos.filter(v => v.category === currentFilter);
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p style="color:var(--secondary-text);">No videos found. Upload some to GitHub!</p>';
+                return;
+            }
+            grid.innerHTML = filtered.map(v => `
+                <div class="video-card" onclick="openWatchPage(${v.id}, 'video')" title="${v.title}">
+                    <div class="thumbnail" style="background-image:url('${v.thumbnail}');">
+                        <div class="timestamp">${v.duration}</div>
+                    </div>
+                    <div class="video-info">
+                        <div class="channel-avatar" style="background-color:#555;"></div>
+                        <div class="video-details">
+                            <div class="video-title">${v.title}</div>
+                            <div class="channel-name">${v.channel} <span class="material-icons">check_circle</span></div>
+                            <div class="video-stats">${v.views} • ${v.time}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderShortsGrid() {
+            const grid = document.getElementById('shorts-grid');
+            if (shortsList.length === 0) {
+                grid.innerHTML = '<p style="color:var(--secondary-text);">No shorts found. Upload some!</p>';
+                return;
+            }
+            grid.innerHTML = shortsList.map(s => `
+                <div class="short-card" onclick="openWatchPage(${s.id}, 'short')" title="${s.title}">
+                    <div class="short-thumbnail" style="background-image:url('${s.thumbnail}');"></div>
+                    <div class="short-title">${s.title}</div>
+                    <div class="short-views">${s.views}</div>
+                </div>
+            `).join('');
+        }
+
+        // -------------------- WATCH PAGE --------------------
+        function openWatchPage(id, type) {
+            const watchPage = document.getElementById('watch-page');
+            const watchContent = document.getElementById('watch-content');
+            let videoData;
+            if (type === 'video') {
+                videoData = homeVideos.find(v => v.id === id);
+            } else {
+                videoData = shortsList.find(s => s.id === id);
+            }
+            if (!videoData) return;
+
+            const poster = videoData.thumbnail;
+            watchContent.innerHTML = `
+                <div style="max-width:900px;">
+                    <div class="video-player">
+                        <video controls autoplay poster="${poster}">
+                            <source src="${videoData.videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <h1 style="font-size:22px; margin:16px 0 8px;">${videoData.title}</h1>
+                    <p style="color:var(--secondary-text);">${videoData.views} • ${videoData.time || 'Just now'}</p>
+                </div>
+            `;
+            switchPage('watch');
+        }
+
+        // -------------------- PAGE NAVIGATION --------------------
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(pageId + '-page');
+            if (target) target.classList.add('active');
+
+            document.querySelectorAll('#sidebar .sidebar-link').forEach(l => l.classList.remove('active'));
+            const sideLink = document.querySelector(`#sidebar .sidebar-link[data-page="${pageId}"]`);
+            if (sideLink) sideLink.classList.add('active');
+
+            document.querySelectorAll('#bottomNav .bottom-nav-item').forEach(n => n.classList.remove('active'));
+            const bottomItem = document.querySelector(`#bottomNav .bottom-nav-item[data-page="${pageId}"]`);
+            if (bottomItem) bottomItem.classList.add('active');
+
+            document.getElementById('scrollableContent').scrollTop = 0;
+            closeAllDropdowns();
+        }
+
+        function filterChips(chip) {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            currentFilter = chip.textContent.trim();
+            renderHomeGrid();
+        }
+
+        // -------------------- DROPDOWNS --------------------
+        function toggleDropdown(id) {
+            const dd = document.getElementById(id);
+            const isActive = dd.classList.contains('active');
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('active'));
+            if (!isActive) dd.classList.add('active');
+        }
+        function closeAllDropdowns() {
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('active'));
+        }
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown-menu') && !e.target.closest('.profile-pic') && !e.target.closest('[onclick*="toggleDropdown"]')) {
+                closeAllDropdowns();
+            }
+        });
+
+        // -------------------- SEARCH --------------------
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (query) alert('Search for: ' + query);
+        }
+        function toggleMobileSearch() {
+            const mid = document.querySelector('.header-middle');
+            if (mid.style.display === 'flex') {
+                mid.style.display = 'none';
+            } else {
+                mid.style.display = 'flex';
+                mid.style.position = 'absolute'; mid.style.top = '56px'; mid.style.left = '0';
+                mid.style.right = '0'; mid.style.padding = '8px 16px';
+                mid.style.backgroundColor = 'var(--header-bg)'; mid.style.zIndex = '199';
+                mid.querySelector('input').focus();
+            }
+        }
+
+        // -------------------- SIDEBAR --------------------
+        function toggleSidebar() {
+            if (window.innerWidth > 768) document.getElementById('sidebar').classList.toggle('collapsed');
+        }
+        function handleResponsiveSidebar() {
+            const sb = document.getElementById('sidebar');
+            if (window.innerWidth <= 1200 && window.innerWidth > 768) sb.classList.add('collapsed');
+            else if (window.innerWidth > 1200) sb.classList.remove('collapsed');
+        }
+
+        // -------------------- INIT --------------------
+        window.onload = () => {
+            scanMedia().then(() => {
+                console.log('✅ Media scan complete. Found ' + homeVideos.length + ' videos and ' + shortsList.length + ' shorts.');
+            });
+            handleResponsiveSidebar();
+            window.addEventListener('resize', handleResponsiveSidebar);
+        };
+    </script>
+</body>
+                  </html>
