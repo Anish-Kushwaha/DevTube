@@ -435,9 +435,11 @@
       .hide-mobile { display: none; }
     }
     @media (max-width: 460px) {
-      .logo span { display: none; }
       .shorts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .header-right { gap: 0; }
+      .logo { font-size: 18px; gap: 5px; }
+      .logo i { font-size: 23px; }
+      .logo sup { display: none; }
     }
   </style>
 </head>
@@ -556,6 +558,34 @@
     const MAX_SHORTS = 30;
     const THUMB_EXTENSIONS = ['.jpg', '.png', '.webp'];
     const EXTERNAL_PAGES = ['settings.html', 'accounts.html', 'policy.html', 'about.html', 'channel.html', 'upload.html', 'purchases.html', 'data.html'];
+    const DUMMY_DESCRIPTIONS = [
+      'Welcome to this DevTube upload. This sample description is ready for your video details, links, and notes.',
+      'A fresh DevTube video is here. Add your project summary, resources, timestamps, and credits in this space later.',
+      'Thanks for watching on DevTube. Use this description area for source code links, social links, and extra context.',
+      'This upload is part of the DevTube library. Share what viewers will learn, build, or enjoy from the video.',
+      'Add a short overview for this video, including the topic, tools used, and any useful links for viewers.',
+      'Use this space to introduce the video and mention any important files, commands, or downloads.',
+      'This is a placeholder description that automatically rotates across upcoming DevTube uploads.',
+      'Write your video notes here: key ideas, chapter markers, credits, and next steps for your audience.',
+      'DevTube has detected this media automatically. Customize this description later with your own upload details.',
+      'A new video is available. Add links, references, and a short explanation of what happens in this upload.',
+      'Use this area for announcements, GitHub repository links, and helpful resources connected to the video.',
+      'This description can hold tutorial steps, setup instructions, and reminders for anyone following along.',
+      'Share the main goal of this upload and invite viewers to explore more videos and shorts on DevTube.',
+      'Add credits, music attribution, project files, and useful notes for viewers in this description field.',
+      'This placeholder keeps the watch page complete until you replace it with a custom video summary.',
+      'Tell viewers what problem this video solves, what they should watch for, and where to go next.',
+      'Use this rotating dummy description for quick uploads that should appear without manual code changes.',
+      'Add a friendly video summary here along with links to related playlists, channels, or documentation.',
+      'This DevTube upload is ready to watch. Update this text later with detailed information about the content.',
+      'Describe the content, tools, and outcome of this upload so viewers understand what they are watching.',
+      'Use this description to add timestamps, important commands, and follow-up tasks for the audience.',
+      'A simple placeholder description for this video. Replace it with your own text whenever you want.',
+      'Add learning goals, source links, credits, and extra notes for this automatically discovered media item.',
+      'This video was added from the repository structure. Use this space for a clean, viewer-friendly summary.',
+      'Write a short intro, helpful links, and any important context for this DevTube upload here.'
+    ];
+
     const PLACEHOLDERS = {
       history: ['history', 'History'],
       playlists: ['playlist_play', 'Playlists'],
@@ -621,7 +651,7 @@
       shorts = foundShorts;
       console.log(`DevTube scan complete: found ${videos.length} videos and ${shorts.length} shorts.`);
 
-      status.innerHTML = `<span class="material-icons-outlined">cloud_done</span><span><strong>Synced from repository.</strong> Found ${videos.length} video${videos.length === 1 ? '' : 's'} and ${shorts.length} short${shorts.length === 1 ? '' : 's'}. Upload Videos/VideoX.mp4, Shorts/ShortX.mp4, and optional thumbnails/VideoX.jpg/png/webp to update automatically.</span>`;
+      status.innerHTML = `<span class="material-icons-outlined">cloud_done</span><span><strong>Scan complete.</strong> Found ${videos.length} video${videos.length === 1 ? '' : 's'} and ${shorts.length} short${shorts.length === 1 ? '' : 's'}. Upload Videos/VideoX.mp4, Shorts/ShortX.mp4, and optional thumbnails/VideoX.jpg/png/webp to update automatically.</span>`;
       renderVideos();
       renderShorts();
     }
@@ -647,7 +677,8 @@
         channel: 'DevTube',
         views: deterministicViews(kind, id),
         time: 'Recently uploaded',
-        duration: type === 'short' ? '0:30' : '10:00'
+        duration: type === 'short' ? '0:30' : '10:00',
+        description: DUMMY_DESCRIPTIONS[(id - 1 + (type === 'short' ? 7 : 0)) % DUMMY_DESCRIPTIONS.length]
       };
       console.log(`DevTube scan: found ${kind}${id}`, media);
       return media;
@@ -714,7 +745,7 @@
             <div class="media-meta">${escapeHtml(item.views)} • ${escapeHtml(item.time)}</div>
             <div class="watch-actions"><span class="pill"><span class="material-icons-outlined">thumb_up</span> Like</span><span class="pill"><span class="material-icons-outlined">share</span> Share</span><span class="pill"><span class="material-icons-outlined">download</span> Save</span></div>
           </div>
-          <aside class="coming-card"><h2>Auto-synced source</h2><p>This player uses <code>${escapeHtml(item.videoUrl)}</code>. Add the next numbered MP4 and optional thumbnail to the repository, and DevTube will discover it on the next page load.</p></aside>
+          <aside class="coming-card"><h2>Description</h2><p>${escapeHtml(item.description)}</p></aside>
         </div>`;
       navigate('watch', false);
     }
@@ -767,17 +798,31 @@
 
     function handleSearch(event) {
       event.preventDefault();
-      const query = document.getElementById('searchInput').value.trim().toLowerCase();
-      if (!query) return;
+      const rawQuery = document.getElementById('searchInput').value.trim();
+      const query = normalizeSearch(rawQuery);
+      if (!query) {
+        renderVideos();
+        navigate('home', false);
+        return;
+      }
       category = 'All';
       document.querySelectorAll('.chip').forEach(chip => chip.classList.toggle('active', chip.dataset.category === 'All'));
-      const matches = videos.filter(video => video.title.toLowerCase().includes(query));
-      document.getElementById('homeGrid').innerHTML = matches.length ? matches.map(video => `
-        <article class="video-card" tabindex="0" role="button" onclick="openWatch(${video.id}, 'video')">
-          ${thumbMarkup(video, 'thumb')}
-          <div class="media-info"><div class="avatar"></div><div class="media-details"><h2 class="media-title">${escapeHtml(video.title)}</h2><div class="media-meta">${escapeHtml(video.channel)} • ${escapeHtml(video.views)}</div></div></div>
-        </article>`).join('') : `<div class="empty-state"><span class="material-icons-outlined">search_off</span><h2>No results for “${escapeHtml(query)}”</h2><p>Search is local UI only and filters the scanned video titles already found on this page.</p></div>`;
+      const matches = [...videos, ...shorts].filter(item => {
+        const compactTitle = normalizeSearch(item.title);
+        const compactTypeId = normalizeSearch(`${item.type}${item.id}`);
+        const compactPluralTypeId = normalizeSearch(`${item.type}s${item.id}`);
+        return compactTitle.includes(query) || compactTypeId.includes(query) || compactPluralTypeId.includes(query);
+      });
+      document.getElementById('homeGrid').innerHTML = matches.length ? matches.map(item => `
+        <article class="video-card" tabindex="0" role="button" aria-label="Watch ${escapeAttribute(item.title)}" onclick="openWatch(${item.id}, '${item.type}')" onkeydown="cardKey(event, ${item.id}, '${item.type}')">
+          ${thumbMarkup(item, item.type === 'short' ? 'short-thumb' : 'thumb')}
+          <div class="media-info"><div class="avatar"></div><div class="media-details"><h2 class="media-title">${escapeHtml(item.title)}</h2><div class="media-meta">${escapeHtml(item.channel)} • ${escapeHtml(item.views)}</div><div class="media-meta">Search result for “${escapeHtml(rawQuery)}”</div></div></div>
+        </article>`).join('') : `<div class="empty-state"><span class="material-icons-outlined">search_off</span><h2>No results for “${escapeHtml(rawQuery)}”</h2><p>Try searches like Video1, Video 2, Short5, or Shorts5 after those files are uploaded and detected.</p></div>`;
       navigate('home', false);
+    }
+
+    function normalizeSearch(value) {
+      return String(value).toLowerCase().replace(/[^a-z0-9]/g, '');
     }
 
     function showComingSoon(title) {
