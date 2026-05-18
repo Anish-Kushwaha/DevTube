@@ -5,313 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f0f0f">
   <title>DevTube - Settings</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    :root {
-      color-scheme: dark;
-      --bg: #0f0f0f;
-      --surface: #181818;
-      --surface-2: #212121;
-      --surface-3: #272727;
-      --text: #f1f1f1;
-      --muted: #aaa;
-      --muted-2: #717171;
-      --border: #303030;
-      --brand: #ff0033;
-      --blue: #3ea6ff;
-    }
+    :root { color-scheme: dark; --bg:#0f0f0f; --card:#1f1f1f; --text:#f1f1f1; --muted:#aaa; --border:#333; --brand:#ff0033; --blue:#3ea6ff; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: Roboto, "Segoe UI", Arial, sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-    button { font: inherit; }
-    .settings-shell { margin: 0 auto; max-width: 1180px; min-height: 100vh; }
-    .settings-header {
-      align-items: center;
-      background: rgba(15, 15, 15, 0.98);
-      display: flex;
-      gap: 22px;
-      height: 72px;
-      padding: 0 24px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .back-button {
-      align-items: center;
-      background: transparent;
-      border: 0;
-      border-radius: 50%;
-      color: var(--text);
-      cursor: pointer;
-      display: inline-flex;
-      height: 44px;
-      justify-content: center;
-      width: 44px;
-    }
-    .back-button:hover { background: var(--surface-3); }
-    .settings-header h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
-    .settings-grid { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 30px; padding: 18px 24px 80px; }
-    .settings-rail { border-right: 1px solid var(--border); padding-right: 18px; position: sticky; top: 90px; height: max-content; }
-    .rail-logo { align-items: center; display: flex; font-size: 21px; font-weight: 900; gap: 8px; margin: 8px 0 20px; }
-    .rail-logo i { color: var(--brand); font-size: 28px; }
-    .rail-link { align-items: center; border-radius: 10px; color: var(--muted); display: flex; gap: 14px; padding: 11px 12px; }
-    .rail-link:hover, .rail-link.active { background: var(--surface-3); color: var(--text); }
-    .settings-panel { max-width: 760px; }
-    .section { border-bottom: 1px solid var(--border); padding: 22px 0 18px; }
-    .section:first-child { padding-top: 0; }
-    .section-title { font-size: 20px; font-weight: 800; margin: 0 0 16px; }
-    .setting-item {
-      align-items: flex-start;
-      border-radius: 14px;
-      display: grid;
-      gap: 18px;
-      grid-template-columns: 42px minmax(0, 1fr) 28px;
-      min-height: 76px;
-      padding: 14px 10px;
-      transition: background 0.16s ease;
-    }
-    .setting-item:hover { background: var(--surface); }
-    .setting-icon {
-      align-items: center;
-      color: var(--text);
-      display: inline-flex;
-      height: 42px;
-      justify-content: center;
-      width: 42px;
-    }
-    .setting-icon .material-icons, .setting-icon .material-icons-outlined { font-size: 29px; }
-    .setting-copy h2 { font-size: 16px; font-weight: 800; line-height: 1.35; margin-bottom: 7px; }
-    .features { display: flex; flex-wrap: wrap; gap: 7px; }
-    .feature {
-      background: var(--surface-2);
-      border: 1px solid transparent;
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1;
-      padding: 7px 9px;
-      white-space: nowrap;
-    }
-    .feature.on { background: rgba(62, 166, 255, 0.12); border-color: rgba(62, 166, 255, 0.22); color: #c8e6ff; }
-    .setting-chevron { align-items: center; color: var(--muted-2); display: flex; height: 42px; justify-content: center; }
-    .bottom-nav {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      bottom: 0;
-      display: none;
-      height: 58px;
-      justify-content: space-around;
-      left: 0;
-      position: fixed;
-      right: 0;
-      z-index: 20;
-    }
-    .bottom-nav a {
-      align-items: center;
-      color: var(--text);
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      font-size: 10px;
-      gap: 2px;
-      justify-content: center;
-    }
-    .bottom-nav a.active { color: #fff; font-weight: 800; }
-    .bottom-nav .material-icons, .bottom-nav .material-icons-outlined { font-size: 23px; }
-    .bottom-upload .material-icons-outlined { font-size: 34px; }
-    @media (max-width: 860px) {
-      .settings-shell { max-width: none; }
-      .settings-header { height: 72px; padding: 0 12px; }
-      .settings-header h1 { font-size: 26px; }
-      .settings-grid { display: block; padding: 0 0 76px; }
-      .settings-rail { display: none; }
-      .settings-panel { max-width: none; }
-      .section { padding: 26px 0 16px; }
-      .section-title { font-size: 19px; padding: 0 20px; }
-      .setting-item { border-radius: 0; grid-template-columns: 58px minmax(0, 1fr) 28px; min-height: 72px; padding: 13px 16px 13px 20px; }
-      .setting-icon { height: 44px; justify-content: flex-start; width: 44px; }
-      .setting-copy h2 { font-size: 16px; margin-top: 1px; }
-      .features { gap: 6px; }
-      .feature { font-size: 11px; padding: 6px 8px; }
-      .bottom-nav { display: flex; }
-    }
-    @media (max-width: 420px) {
-      .feature:nth-child(3) { display: none; }
-      .setting-item { grid-template-columns: 50px minmax(0, 1fr) 20px; }
-      .settings-header { gap: 14px; }
-    }
+    body { align-items: center; background: radial-gradient(circle at 10% 10%, rgba(255,0,51,.18), transparent 32%), var(--bg); color: var(--text); display: flex; font-family: Roboto, "Segoe UI", Arial, sans-serif; min-height: 100vh; padding: 24px; }
+    main { background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid var(--border); border-radius: 24px; box-shadow: 0 24px 80px rgba(0,0,0,.45); margin: auto; max-width: 760px; padding: clamp(28px, 5vw, 56px); width: 100%; }
+    .logo { align-items: center; color: var(--text); display: inline-flex; font-size: 22px; font-weight: 900; gap: 8px; margin-bottom: 42px; text-decoration: none; }
+    .logo i { color: var(--brand); font-size: 30px; }
+    .icon { color: var(--brand); font-size: 56px; margin-bottom: 18px; }
+    h1 { font-size: clamp(34px, 8vw, 62px); letter-spacing: -2px; line-height: .95; margin-bottom: 16px; }
+    p { color: var(--muted); font-size: 18px; line-height: 1.7; max-width: 620px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    a.button { align-items: center; background: #272727; border-radius: 999px; color: var(--text); display: inline-flex; gap: 8px; padding: 12px 16px; text-decoration: none; }
+    a.button.primary { background: var(--text); color: #0f0f0f; font-weight: 800; }
+    code { background: rgba(255,255,255,.08); border-radius: 6px; padding: 2px 6px; }
   </style>
 </head>
 <body>
-  <div class="settings-shell">
-    <header class="settings-header">
-      <a class="back-button" href="index.html" aria-label="Back to DevTube"><span class="material-icons">arrow_back</span></a>
-      <h1>Settings</h1>
-    </header>
-
-    <div class="settings-grid">
-      <aside class="settings-rail" aria-label="Settings sections">
-        <a class="rail-logo" href="index.html"><i class="fa-brands fa-studiovinari"></i><span>DevTube</span></a>
-        <a class="rail-link active" href="#account"><span class="material-icons-outlined">person</span><span>Account</span></a>
-        <a class="rail-link" href="#preferences"><span class="material-icons-outlined">play_circle</span><span>Video and audio</span></a>
-        <a class="rail-link" href="#help"><span class="material-icons-outlined">help_outline</span><span>Help and policy</span></a>
-      </aside>
-
-      <main class="settings-panel">
-        <section class="section" id="account">
-          <h2 class="section-title">Account</h2>
-          <a class="setting-item" href="#general">
-            <span class="setting-icon"><span class="material-icons-outlined">settings</span></span>
-            <span class="setting-copy"><h2>General</h2><span class="features"><span class="feature on">Dark theme on</span><span class="feature">App language</span><span class="feature">Region: India</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="accounts.html">
-            <span class="setting-icon"><span class="material-icons-outlined">account_box</span></span>
-            <span class="setting-copy"><h2>Switch or manage account</h2><span class="features"><span class="feature on">@Anishkushwaha_dev</span><span class="feature">Add account</span><span class="feature">Channel identity</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#family">
-            <span class="setting-icon"><span class="material-icons-outlined">groups</span></span>
-            <span class="setting-copy"><h2>Family Centre</h2><span class="features"><span class="feature">Supervision</span><span class="feature">Shared controls</span><span class="feature">Invite family</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#languages">
-            <span class="setting-icon"><span class="material-icons-outlined">translate</span></span>
-            <span class="setting-copy"><h2>Languages</h2><span class="features"><span class="feature on">English</span><span class="feature">Hindi captions</span><span class="feature">Auto-translate</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#time">
-            <span class="setting-icon"><span class="material-icons-outlined">analytics</span></span>
-            <span class="setting-copy"><h2>Time management</h2><span class="features"><span class="feature">Watch time</span><span class="feature">Break reminder</span><span class="feature">Bedtime reminder</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#notifications">
-            <span class="setting-icon"><span class="material-icons-outlined">notifications</span></span>
-            <span class="setting-copy"><h2>Notifications</h2><span class="features"><span class="feature on">Uploads on</span><span class="feature">Shorts digest</span><span class="feature">Email alerts</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="purchases.html">
-            <span class="setting-icon"><span class="material-icons-outlined">sell</span></span>
-            <span class="setting-copy"><h2>Purchases and memberships</h2><span class="features"><span class="feature">Memberships</span><span class="feature">Super thanks</span><span class="feature">Receipts</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#billing">
-            <span class="setting-icon"><span class="material-icons-outlined">credit_card</span></span>
-            <span class="setting-copy"><h2>Billing and payments</h2><span class="features"><span class="feature">Payment methods</span><span class="feature">Invoices</span><span class="feature">UPI ready</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#history">
-            <span class="setting-icon"><span class="material-icons-outlined">history</span></span>
-            <span class="setting-copy"><h2>Manage all history</h2><span class="features"><span class="feature">Watch history</span><span class="feature">Search history</span><span class="feature">Pause history</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="data.html">
-            <span class="setting-icon"><span class="material-icons-outlined">admin_panel_settings</span></span>
-            <span class="setting-copy"><h2>Your data in DevTube</h2><span class="features"><span class="feature">Export data</span><span class="feature">Privacy dashboard</span><span class="feature">Ad controls</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#privacy">
-            <span class="setting-icon"><span class="material-icons-outlined">lock</span></span>
-            <span class="setting-copy"><h2>Privacy</h2><span class="features"><span class="feature on">Private likes</span><span class="feature">Subscriptions</span><span class="feature">Mentions</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#connected">
-            <span class="setting-icon"><span class="material-icons-outlined">link</span></span>
-            <span class="setting-copy"><h2>Connected apps</h2><span class="features"><span class="feature">GitHub Pages</span><span class="feature">YouTube links</span><span class="feature">OAuth dummy</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#experiments">
-            <span class="setting-icon"><span class="material-icons-outlined">science</span></span>
-            <span class="setting-copy"><h2>Try experimental new features</h2><span class="features"><span class="feature">AI summaries</span><span class="feature">Auto chapters</span><span class="feature">Beta player</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-        </section>
-
-        <section class="section" id="preferences">
-          <h2 class="section-title">Video and audio preferences</h2>
-          <a class="setting-item" href="#quality">
-            <span class="setting-icon"><span class="material-icons-outlined">hd</span></span>
-            <span class="setting-copy"><h2>Video quality preferences</h2><span class="features"><span class="feature on">Auto HD</span><span class="feature">Wi-Fi 1080p</span><span class="feature">Mobile data 480p</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#playback">
-            <span class="setting-icon"><span class="material-icons-outlined">play_arrow</span></span>
-            <span class="setting-copy"><h2>Playback</h2><span class="features"><span class="feature on">Autoplay</span><span class="feature">Double-tap seek</span><span class="feature">Stable volume</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#captions">
-            <span class="setting-icon"><span class="material-icons-outlined">closed_caption</span></span>
-            <span class="setting-copy"><h2>Captions</h2><span class="features"><span class="feature">Default captions</span><span class="feature">Font size</span><span class="feature">Caption style</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#saving">
-            <span class="setting-icon"><span class="material-icons-outlined">tune</span></span>
-            <span class="setting-copy"><h2>Data saving</h2><span class="features"><span class="feature">Low data mode</span><span class="feature">Preview off</span><span class="feature">Audio only</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#downloads">
-            <span class="setting-icon"><span class="material-icons-outlined">file_download</span></span>
-            <span class="setting-copy"><h2>Downloads</h2><span class="features"><span class="feature">Smart downloads</span><span class="feature">Storage limit</span><span class="feature">Download quality</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#chat">
-            <span class="setting-icon"><span class="material-icons-outlined">settings_input_antenna</span></span>
-            <span class="setting-copy"><h2>Live chat</h2><span class="features"><span class="feature">Top chat</span><span class="feature">Slow mode</span><span class="feature">Moderator tools</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#accessibility">
-            <span class="setting-icon"><span class="material-icons-outlined">accessibility_new</span></span>
-            <span class="setting-copy"><h2>Accessibility</h2><span class="features"><span class="feature">High contrast</span><span class="feature">Large controls</span><span class="feature">Keyboard focus</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#tv">
-            <span class="setting-icon"><span class="material-icons-outlined">connected_tv</span></span>
-            <span class="setting-copy"><h2>Watch on TV</h2><span class="features"><span class="feature">Pair with code</span><span class="feature">Cast ready</span><span class="feature">Living room mode</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-        </section>
-
-        <section class="section" id="help">
-          <h2 class="section-title">Help and policy</h2>
-          <a class="setting-item" href="#help-center">
-            <span class="setting-icon"><span class="material-icons-outlined">help_outline</span></span>
-            <span class="setting-copy"><h2>Help</h2><span class="features"><span class="feature">Help centre</span><span class="feature">Contact admin</span><span class="feature">Troubleshooting</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="policy.html">
-            <span class="setting-icon"><span class="material-icons-outlined">description</span></span>
-            <span class="setting-copy"><h2>DevTube Terms of Service</h2><span class="features"><span class="feature">Terms</span><span class="feature">Community rules</span><span class="feature">Copyright</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="#feedback">
-            <span class="setting-icon"><span class="material-icons-outlined">chat_bubble_outline</span></span>
-            <span class="setting-copy"><h2>Send feedback</h2><span class="features"><span class="feature">Bug report</span><span class="feature">Feature request</span><span class="feature">Screenshot</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-          <a class="setting-item" href="about.html">
-            <span class="setting-icon"><span class="material-icons-outlined">info</span></span>
-            <span class="setting-copy"><h2>About</h2><span class="features"><span class="feature">Version 1.0</span><span class="feature">DevTube static</span><span class="feature">GitHub Pages</span></span></span>
-            <span class="setting-chevron"><span class="material-icons">chevron_right</span></span>
-          </a>
-        </section>
-      </main>
+  <main>
+    <a class="logo" href="index.html"><i class="fa-brands fa-studiovinari"></i><span>DevTube</span></a>
+    <div class="material-icons-outlined icon">settings</div>
+    <h1>Settings</h1>
+    <p>Tune your DevTube playback, privacy, and interface preferences here.</p>
+    <p style="margin-top:14px;">This page is intentionally standalone. Replace or extend this file anytime; <code>index.html</code> checks for it with a HEAD request and marks it live automatically.</p>
+    <div class="actions">
+      <a class="button primary" href="index.html"><span class="material-icons-outlined">home</span> Back to DevTube</a>
+      <a class="button" href="upload.html"><span class="material-icons-outlined">upload</span> Upload guide</a>
     </div>
-  </div>
-
-  <nav class="bottom-nav" aria-label="Mobile navigation">
-    <a href="index.html"><span class="material-icons">home</span><span>Home</span></a>
-    <a href="index.html#shorts"><span class="material-icons-outlined">bolt</span><span>Shorts</span></a>
-    <a class="bottom-upload" href="upload.html"><span class="material-icons-outlined">add_circle</span><span>Upload</span></a>
-    <a href="index.html#subscriptions"><span class="material-icons-outlined">subscriptions</span><span>Subs</span></a>
-    <a class="active" href="channel.html"><span class="material-icons-outlined">account_circle</span><span>You</span></a>
-  </nav>
+  </main>
 </body>
 </html>
