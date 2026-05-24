@@ -3,40 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#05090d">
-  <title>DevTube - Legal Policy & Acceptable Use</title>
+  <meta name="theme-color" content="#0f0f0f">
+  <title>DevTube - Policy</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    :root { --bg:#060b10; --surface:#0a1118; --surface-2:#0c1821; --line:#12313c; --text:#d9f7f9; --muted:#95b4b8; --neon:#12f3d3; --neon-2:#12a2f3; color-scheme: dark; }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{background:radial-gradient(circle at 90% -10%, rgba(18,243,211,.16), transparent 40%), repeating-linear-gradient(0deg, rgba(18,243,211,.06) 0 1px, transparent 1px 48px), repeating-linear-gradient(90deg, rgba(18,243,211,.04) 0 1px, transparent 1px 48px), var(--bg); color:var(--text); font-family:Roboto,"Segoe UI",Arial,sans-serif; min-height:100vh}
-    a{color:inherit;text-decoration:none}
-    .topbar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:rgba(5,9,13,.96);border-bottom:1px solid var(--line)}
-    .brand{display:flex;gap:10px;align-items:center;font-size:34px;font-weight:900;color:var(--neon)}
-    .brand small{font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.08em}
-    .nav{display:flex;gap:14px;flex-wrap:wrap}
-    .nav a{padding:8px 12px;border-radius:8px;color:var(--muted);font-weight:700}
-    .nav a.active,.nav a:hover{color:var(--neon);background:rgba(18,243,211,.08)}
-    .wrap{max-width:1080px;margin:0 auto;padding:18px 14px 34px}
-    .headline,.card{background:rgba(7,14,20,.84);border:1px solid var(--line);border-radius:18px;box-shadow:0 0 0 1px rgba(18,243,211,.06) inset}
-    .headline{padding:24px;margin-bottom:18px}
-    .headline h1{font-size:clamp(30px,4vw,48px);color:var(--neon);margin-bottom:10px}
-    .meta{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);margin-bottom:10px}
-    .card{padding:22px;margin-bottom:14px}
-    .card h2{font-size:34px;color:var(--neon);margin-bottom:10px}
-    .card p{line-height:1.75;color:#c7e7ea}
-    .card ul{margin:10px 0 0 24px;line-height:1.8;color:#c7e7ea}
-    .sub{color:#b8fef6;font-size:26px;margin:10px 0}
-    .quote{margin-top:10px;padding:14px;border-left:4px solid var(--neon);background:rgba(18,243,211,.06);border-radius:10px;font-size:28px;line-height:1.45}
-    .footer{margin-top:20px;padding:16px;border-top:1px solid var(--line);color:var(--muted);text-align:center}
-    @media (max-width:720px){.brand{font-size:28px}.card h2{font-size:29px}.quote{font-size:23px}}
+    :root { --bg:#0f0f0f; --surface:#181818; --surface-2:#212121; --surface-3:#272727; --text:#f1f1f1; --muted:#aaa; --border:#303030; --brand:#ff0033; --blue:#3ea6ff; color-scheme: dark; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: Roboto, "Segoe UI", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    .topbar { align-items: center; background: rgba(15,15,15,.98); display: flex; gap: 16px; height: 56px; justify-content: space-between; padding: 0 16px; position: sticky; top: 0; z-index: 20; }
+    .brand { align-items: center; display: flex; font-size: 21px; font-weight: 900; gap: 7px; letter-spacing: -0.6px; white-space: nowrap; }
+    .brand i { color: var(--brand); font-size: 26px; }
+    .nav { display: flex; gap: 8px; }
+    .nav a { border-radius: 999px; color: var(--muted); font-size: 13px; font-weight: 700; padding: 8px 12px; }
+    .nav a.active, .nav a:hover { background: var(--surface-3); color: var(--text); }
+    .shell { margin: 0 auto; max-width: 980px; padding: 20px 16px 88px; }
+    .hero { background: linear-gradient(120deg, #111827 0%, #1f2937 36%, #7f1d1d 70%, #111827 100%); border-radius: 16px; padding: clamp(18px, 4vw, 30px); }
+    .hero h1 { font-size: clamp(30px, 5vw, 48px); letter-spacing: -1px; }
+    .meta { color: #d1d5db; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
+    .hero p { color: #d1d5db; line-height: 1.65; margin-top: 12px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; margin-top: 14px; padding: 18px; }
+    .card h2 { color: #fff; font-size: 22px; margin-bottom: 10px; }
+    .card p, .card li { color: var(--muted); line-height: 1.75; }
+    .card ul { margin: 8px 0 0 22px; }
+    .sub { color: #fff; font-size: 18px; margin: 10px 0 6px; }
+    .quote { background: rgba(255,255,255,.04); border-left: 4px solid var(--blue); border-radius: 10px; color: #e5e7eb; font-size: 18px; line-height: 1.6; margin-top: 10px; padding: 12px 14px; }
+    .bottom-nav { background: var(--bg); border-top: 1px solid var(--border); bottom: 0; display: none; height: 64px; left: 0; position: fixed; right: 0; z-index: 30; }
+    .bottom-nav a { align-items: center; color: var(--muted); display: flex; flex: 1; flex-direction: column; font-size: 11px; gap: 2px; justify-content: center; }
+    .bottom-nav a.active { color: var(--text); }
+    .bottom-nav .material-icons, .bottom-nav .material-icons-outlined { font-size: 24px; }
+    @media (max-width: 720px) { .nav { display: none; } .bottom-nav { display: flex; } }
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><i class="fa-brands fa-studiovinari"></i><span>DevTube</span><small>LEGAL // POLICY</small></div>
+    <a class="brand" href="index.html"><i class="fa-brands fa-studiovinari"></i><span>DevTube</span></a>
     <nav class="nav">
       <a href="index.html">Home</a>
       <a href="channel.html">Channel</a>
@@ -45,14 +48,12 @@
       <a href="about.html">About</a>
     </nav>
   </header>
-
-  <main class="wrap">
-    <section class="headline">
+  <main class="shell">
+    <section class="hero">
       <h1><i class="fas fa-gavel"></i> Legal Policy & Acceptable Use Agreement</h1>
       <div class="meta"><span><i class="far fa-calendar"></i> Effective Date: May 24, 2026</span><span><i class="far fa-edit"></i> Last Updated: May 24, 2026</span></div>
       <p>This policy governs access to and use of DevTube platforms, repositories, uploads, and related services. By using DevTube, you agree to this policy and all applicable laws.</p>
     </section>
-
     <section class="card"><h2>1. Introduction</h2><p>Welcome to DevTube (“we”, “our”, “us”). This policy applies to all visitors, creators, contributors, and viewers using DevTube pages, uploaded media libraries, and linked ecosystem pages.</p></section>
     <section class="card"><h2>2. Legal Compliance Framework</h2><p>DevTube operates under applicable laws and platform rules. Users must comply with applicable cyber laws, data protection standards, and content ownership obligations in their jurisdiction.</p><ul><li>No unauthorized access, probing, scraping abuse, or exploit attempts.</li><li>No rights violation, piracy, or unlawful redistribution.</li><li>No abuse of repository and upload pipelines.</li></ul></section>
     <section class="card"><h2>3. Data Collection & Privacy Policy</h2><h3 class="sub">3.1 Data We Collect</h3><p>Basic technical data (browser details, request logs), account-supplied details, and platform interaction data may be processed for reliability and abuse monitoring.</p><h3 class="sub">3.2 Purpose of Data Collection</h3><p>Data is processed to secure DevTube services, improve delivery, diagnose failures, respond to support requests, and maintain platform integrity.</p><h3 class="sub">3.3 Data Sharing</h3><p>No personal data is sold. Data is disclosed only where required by law, consent, or legal safety response.</p></section>
@@ -67,9 +68,14 @@
     <section class="card"><h2>12. Policy Updates</h2><p>We may update this policy from time to time. Continued use of DevTube after updates means acceptance of revised terms.</p></section>
     <section class="card"><h2>13. Governing Law & Jurisdiction</h2><p>This policy is governed by applicable laws of India. Any disputes shall be subject to competent jurisdiction as per applicable legal provisions.</p></section>
     <section class="card"><h2>14. Contact Information</h2><p>For policy, data, or legal questions, contact:</p><ul><li><a href="https://AnishKushwaha.co.in" target="_blank" rel="noopener">Official Website: AnishKushwaha.co.in</a></li><li><a href="mailto:Anish.Enterprises@aol.com">Email: Anish.Enterprises@aol.com</a></li></ul></section>
-    <section class="card"><h2>15. Founder’s Statement</h2><div class="quote">“At DevTube, security and trust are foundational. We build systems to remain resilient, transparent, and responsible for creators and viewers.”</div><p style="margin-top:12px"><strong>— Anish Kushwaha</strong><br>Founder & Lead Engineer</p></section>
-
-    <footer class="footer">© 2026 DevTube · All rights reserved.</footer>
+    <section class="card"><h2>15. Founder’s Statement</h2><div class="quote">“At DevTube, security and trust are foundational. We build systems to remain resilient, transparent, and responsible for creators and viewers.”</div><p style="margin-top:12px;color:#d1d5db"><strong>— Anish Kushwaha</strong><br>Founder & Lead Engineer</p></section>
   </main>
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a href="index.html"><span class="material-icons">home</span><span>Home</span></a>
+    <a href="index.html#shorts"><span class="material-icons-outlined">bolt</span><span>Shorts</span></a>
+    <a href="upload.html"><span class="material-icons-outlined">add_circle</span><span>Upload</span></a>
+    <a href="channel.html"><span class="material-icons-outlined">subscriptions</span><span>Subs</span></a>
+    <a class="active" href="policy.html"><span class="material-icons-outlined">policy</span><span>Policy</span></a>
+  </nav>
 </body>
 </html>
