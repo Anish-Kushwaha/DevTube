@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f0f0f">
+  <title>DevTube - About</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root { --bg:#0f0f0f; --surface:#181818; --surface-2:#212121; --surface-3:#272727; --text:#f1f1f1; --muted:#aaa; --border:#303030; --accent:#ff0033; --blue:#3ea6ff; color-scheme: dark; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: Roboto, "Segoe UI", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+
+    .topbar { align-items: center; background: rgba(15,15,15,.98); display: flex; gap: 16px; height: 56px; justify-content: space-between; padding: 0 16px; position: sticky; top: 0; z-index: 20; }
+    .topbar-left, .topbar-center, .topbar-right { align-items: center; display: flex; }
+    .topbar-left { gap: 12px; min-width: 210px; }
+    .topbar-center { flex: 1; justify-content: center; min-width: 120px; }
+    .topbar-right { gap: 6px; justify-content: flex-end; min-width: 150px; }
+    .icon-button { align-items: center; background: transparent; border: 0; border-radius: 50%; color: var(--text); cursor: pointer; display: inline-flex; height: 40px; justify-content: center; width: 40px; }
+    .icon-button:hover { background: var(--surface-3); }
+    .brand { align-items: center; display: flex; font-size: 21px; font-weight: 900; gap: 7px; letter-spacing: -0.6px; white-space: nowrap; }
+    .brand i { color: var(--accent); font-size: 26px; }
+    .search { align-items: center; background: #121212; border: 1px solid var(--border); border-radius: 999px; display: flex; flex: 1; max-width: 640px; overflow: hidden; }
+    .search input { background: transparent; border: 0; color: var(--text); flex: 1; min-width: 0; outline: 0; padding: 10px 16px; }
+    .search button { align-items: center; background: #222; border: 0; border-left: 1px solid var(--border); color: var(--text); display: flex; height: 40px; justify-content: center; width: 64px; }
+    .profile-dot { align-items: center; background: #334155 center/cover no-repeat; background-image: url('Anish.png'); border-radius: 50%; display: inline-flex; height: 32px; justify-content: center; width: 32px; }
+
+    .about-shell { margin: 0 auto; max-width: 1180px; padding: 24px; }
+    .hero { background: linear-gradient(120deg, #111827 0%, #1f2937 36%, #7f1d1d 70%, #111827 100%); border-radius: 16px; padding: clamp(22px, 4vw, 42px); }
+    .hero h1 { font-size: clamp(34px, 7vw, 62px); letter-spacing: -2px; }
+    .hero p { color: rgba(255,255,255,.82); margin-top: 12px; max-width: 760px; line-height: 1.65; }
+    .contact-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 18px 60px rgba(0,0,0,.35); margin-top: 24px; padding: clamp(18px, 3vw, 28px); }
+    .card-header { align-items: center; display: flex; gap: 24px; }
+    .profile-pic { background: #333; border-radius: 50%; height: clamp(96px, 14vw, 136px); object-fit: cover; width: clamp(96px, 14vw, 136px); }
+    .title-section h2 { align-items: center; display: flex; flex-wrap: wrap; font-size: clamp(28px, 5vw, 44px); gap: 12px; letter-spacing: -1.4px; }
+    .title-section h2 i { color: var(--accent); }
+    .role { color: var(--muted); font-size: 15px; font-weight: 700; margin-top: 8px; }
+    .badge { align-items: center; background: var(--surface-3); border: 1px solid var(--border); border-radius: 999px; display: inline-flex; font-size: 13px; font-weight: 900; gap: 8px; margin-top: 12px; padding: 9px 13px; }
+    .badge i { color: #facc15; }
+    .badge a { color: #fff; }
+    .badge a:hover, .inline-link:hover, .contact-link-item a:hover { color: var(--blue); text-decoration: underline; }
+    .executive-desc { background: #111; border: 1px solid var(--border); border-radius: 14px; line-height: 1.7; margin-top: 22px; padding: 16px 18px; }
+    .license-card { background: linear-gradient(135deg, rgba(255,0,51,.16), rgba(62,166,255,.08)); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; display: grid; gap: 12px; margin-top: 18px; padding: 18px; }
+    .license-card h3 { align-items: center; display: flex; font-size: 18px; gap: 10px; }
+    .license-card p { color: var(--muted); line-height: 1.65; }
+    .inline-link { color: var(--blue); font-weight: 800; }
+    .contact-links-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); margin-top: 22px; }
+    .contact-link-item { align-items: center; background: var(--surface-2); border: 1px solid transparent; border-radius: 14px; display: flex; gap: 12px; min-height: 58px; padding: 13px 14px; }
+    .contact-link-item:hover { background: var(--surface-3); border-color: #3f3f3f; }
+    .contact-link-item i { color: var(--accent); flex: 0 0 22px; font-size: 20px; text-align: center; }
+    .contact-link-item a { overflow-wrap: anywhere; }
+
+    @media (max-width: 720px) {
+      .topbar-center { display: none; }
+      .about-shell { padding: 12px; }
+      .card-header { align-items: flex-start; flex-direction: column; }
+      .contact-links-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" aria-label="DevTube about header">
+    <div class="topbar-left">
+      <a class="icon-button" href="index.html" aria-label="Back to DevTube"><span class="material-icons">menu</span></a>
+      <a class="brand" href="index.html"><i class="fa-brands fa-studiovinari"></i><span>DevTube</span></a>
+    </div>
+    <div class="topbar-center">
+      <form class="search" action="index.html" aria-label="Search DevTube">
+        <input name="q" type="search" placeholder="Search">
+        <button type="submit" aria-label="Search"><span class="material-icons-outlined">search</span></button>
+      </form>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-button" type="button" aria-label="Notifications"><span class="material-icons-outlined">notifications</span></button>
+      <span class="profile-dot" aria-label="Anish Kushwaha profile avatar"></span>
+    </div>
+  </header>
+
+  <main class="about-shell">
+    <section class="hero">
+      <h1>About DevTube</h1>
+      <p>DevTube is the auto-sync video platform. This About page now includes complete founder contact details and project licensing info in a YouTube-style dark theme.</p>
+    </section>
+
+    <!-- FOUNDER & CEO - ANISH KUSHWAHA -->
+    <section class="contact-card" style="animation-delay: 0.05s;">
+      <div class="card-header">
+        <img src="Anish.png" alt="Anish Kushwaha" class="profile-pic" onerror="this.onerror=null; this.src='https://placehold.co/110x110?text=Anish';">
+        <div class="title-section">
+          <h2><i class="fa-brands fa-studiovinari"></i> 𝐀𝐍𝐈𝐒𝐇 𝐊𝐔𝐒𝐇𝐖𝐀𝐇𝐀 </h2>
+          <div class="role">Founder &amp; Chief Executive Officer (CEO)</div>
+          <div class="badge"><i class="fas fa-crown"></i> <a href="https://AnishKushwaha.co.in" target="_blank" rel="noopener">𝘼𝙉𝙄𝙎𝙃 𝙀𝙉𝙏𝙀𝙍𝙋𝙍𝙄𝙎𝙀𝙎</a></div>
+        </div>
+      </div>
+      <div class="executive-desc">
+        <i class="fas fa-quote-left" style="color: var(--accent); margin-right: 6px;"></i>
+        Architect of the ecosystem — cybersecurity research, automation systems, and intelligent platforms.
+      </div>
+      <div class="license-card">
+        <h3><span class="material-icons-outlined">verified_user</span> Project License</h3>
+        <p>This project is licensed under <a class="inline-link" href="https://AnishKushwaha.co.in" target="_blank" rel="noopener">ANISH ENTERPRISES</a>.</p>
+      </div>
+      <div class="contact-links-grid">
+        <div class="contact-link-item"><i class="fas fa-globe"></i> <a href="https://Anish-Kushwaha.online" target="_blank" rel="noopener">Anish-Kushwaha.online</a></div>
+        <div class="contact-link-item"><i class="fab fa-github"></i> <a href="https://github.com/Anish-Kushwaha" target="_blank" rel="noopener">GitHub</a></div>
+        <div class="contact-link-item"><i class="fas fa-code"></i> <a href="https://leetcode.com/u/Anish-Kushwaha" target="_blank" rel="noopener">LeetCode</a></div>
+        <div class="contact-link-item"><i class="fas fa-laptop-code"></i> <a href="https://devpost.com/Anish-Kushwaha" target="_blank" rel="noopener">DevPost</a></div>
+        <div class="contact-link-item"><i class="fab fa-hackerrank"></i> <a href="https://www.hackerrank.com/profile/Anish_Kushwaha" target="_blank" rel="noopener">HackerRank</a></div>
+        <div class="contact-link-item"><i class="fa-solid fa-terminal"></i> <a href="https://www.hackerearth.com/@Anish-Kushwaha" target="_blank" rel="noopener">HackerEarth</a></div>
+        <div class="contact-link-item"><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/anishkushwahaji" target="_blank" rel="noopener">LinkedIn</a></div>
+        <div class="contact-link-item"><i class="fab fa-twitter"></i> <a href="https://x.com/Anish_Kushwaha_" target="_blank" rel="noopener">Twitter (X)</a></div>
+        <div class="contact-link-item"><i class="fab fa-facebook"></i> <a href="https://www.facebook.com/Anishkushwaha.dev" target="_blank" rel="noopener">Facebook</a></div>
+        <div class="contact-link-item"><i class="fab fa-reddit"></i> <a href="https://www.reddit.com/r/ANISH_ENTERPRISES" target="_blank" rel="noopener">Reddit</a></div>
+        <div class="contact-link-item"><i class="fab fa-telegram"></i> <a href="https://t.me/Anish_Enterprises" target="_blank" rel="noopener">Telegram</a></div>
+        <div class="contact-link-item"><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/@_Anish_enterprises" target="_blank" rel="noopener">Instagram</a></div>
+        <div class="contact-link-item"><i class="fab fa-whatsapp"></i> <a href="https://wa.me/916287356552" target="_blank" rel="noopener">WhatsApp</a></div>
+        <div class="contact-link-item"><i class="fab fa-youtube"></i> <a href="https://www.youtube.com/@cosmologist_anish" target="_blank" rel="noopener">YouTube</a></div>
+        <div class="contact-link-item"><i class="fas fa-chess-knight"></i> <a href="https://www.chess.com/member/Anish-Kushwaha" target="_blank" rel="noopener">Chess.com</a></div>
+        <div class="contact-link-item"><i class="fas fa-envelope"></i> <a href="mailto:Anish-Kushwaha@zohomail.in">Anish-Kushwaha@zohomail.in</a></div>
+        <div class="contact-link-item"><i class="fas fa-lock"></i> <a href="mailto:Anish_Kushwaha@proton.me">Anish_Kushwaha@proton.me</a></div>
+        <div class="contact-link-item"><i class="fas fa-building"></i> <a href="mailto:Anish.Enterprises@aol.com">Anish.Enterprises@aol.com</a></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
