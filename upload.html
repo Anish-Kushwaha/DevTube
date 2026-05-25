@@ -5,35 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f0f0f">
   <title>DevTube - Upload</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    :root { color-scheme: dark; --bg:#0f0f0f; --card:#1f1f1f; --text:#f1f1f1; --muted:#aaa; --border:#333; --brand:#ff0033; --blue:#3ea6ff; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { align-items: center; background: radial-gradient(circle at 10% 10%, rgba(255,0,51,.18), transparent 32%), var(--bg); color: var(--text); display: flex; font-family: Roboto, "Segoe UI", Arial, sans-serif; min-height: 100vh; padding: 24px; }
-    main { background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid var(--border); border-radius: 24px; box-shadow: 0 24px 80px rgba(0,0,0,.45); margin: auto; max-width: 760px; padding: clamp(28px, 5vw, 56px); width: 100%; }
-    .logo { align-items: center; color: var(--text); display: inline-flex; font-size: 22px; font-weight: 900; gap: 8px; margin-bottom: 42px; text-decoration: none; }
-    .logo i { color: var(--brand); font-size: 30px; }
-    .icon { color: var(--brand); font-size: 56px; margin-bottom: 18px; }
-    h1 { font-size: clamp(34px, 8vw, 62px); letter-spacing: -2px; line-height: .95; margin-bottom: 16px; }
-    p { color: var(--muted); font-size: 18px; line-height: 1.7; max-width: 620px; }
-    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-    a.button { align-items: center; background: #272727; border-radius: 999px; color: var(--text); display: inline-flex; gap: 8px; padding: 12px 16px; text-decoration: none; }
-    a.button.primary { background: var(--text); color: #0f0f0f; font-weight: 800; }
-    code { background: rgba(255,255,255,.08); border-radius: 6px; padding: 2px 6px; }
+    :root { --bg:#0f0f0f; --surface:#181818; --surface-2:#212121; --surface-3:#272727; --text:#f1f1f1; --muted:#aaa; --border:#303030; --brand:#ff0033; --blue:#3ea6ff; color-scheme: dark; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:Roboto,"Segoe UI",Arial,sans-serif;min-height:100vh;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+
+    .topbar{align-items:center;background:rgba(15,15,15,.98);display:flex;gap:16px;height:56px;justify-content:space-between;padding:0 16px;position:sticky;top:0;z-index:20}
+    .top-left,.top-right{align-items:center;display:flex}
+    .top-left{gap:12px}
+    .icon-btn{align-items:center;background:transparent;border:0;border-radius:50%;color:var(--text);cursor:pointer;display:inline-flex;height:40px;justify-content:center;width:40px}
+    .icon-btn:hover{background:var(--surface-3)}
+    .brand{align-items:center;display:flex;font-size:21px;font-weight:900;gap:7px;letter-spacing:-.6px}
+    .brand i{color:var(--brand);font-size:26px}
+    .top-right{gap:4px}
+
+    .shell{margin:0 auto;max-width:980px;padding:20px 16px 88px}
+    .upload-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;display:grid;gap:18px;justify-items:center;padding:clamp(24px,4vw,38px);text-align:center}
+    .upload-icon{align-items:center;background:var(--surface-2);border-radius:50%;display:inline-flex;height:88px;justify-content:center;width:88px}
+    .upload-icon .material-icons-outlined{font-size:44px}
+    h1{font-size:clamp(30px,5vw,46px);letter-spacing:-1px}
+    p{color:var(--muted);font-size:16px;line-height:1.7;max-width:700px}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+    .btn{align-items:center;border-radius:999px;display:inline-flex;font-weight:800;gap:8px;padding:12px 16px}
+    .btn-primary{background:#fff;color:#0f0f0f}
+    .btn-secondary{background:var(--surface-3);color:var(--text)}
+
+    .tips{background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-top:14px;padding:18px}
+    .tips h2{font-size:20px;margin-bottom:10px}
+    .tips ul{color:var(--muted);line-height:1.8;margin-left:20px}
+
+    .bottom-nav{background:var(--bg);border-top:1px solid var(--border);bottom:0;display:none;height:64px;left:0;position:fixed;right:0;z-index:30}
+    .bottom-nav a{align-items:center;color:var(--muted);display:flex;flex:1;flex-direction:column;font-size:11px;gap:2px;justify-content:center}
+    .bottom-nav a.active{color:var(--text)}
+    .bottom-nav .material-icons,.bottom-nav .material-icons-outlined{font-size:24px}
+
+    @media (max-width: 860px){.bottom-nav{display:flex}}
   </style>
 </head>
 <body>
-  <main>
-    <a class="logo" href="index.html"><i class="fa-brands fa-studiovinari"></i><span>DevTube</span></a>
-    <div class="material-icons-outlined icon">upload</div>
-    <h1>Upload</h1>
-    <p>Upload new MP4 files and thumbnails to GitHub using the documented folder names, then refresh DevTube.</p>
-    <p style="margin-top:14px;">This page is intentionally standalone. Replace or extend this file anytime; <code>index.html</code> checks for it with a HEAD request and marks it live automatically.</p>
-    <div class="actions">
-      <a class="button primary" href="index.html"><span class="material-icons-outlined">home</span> Back to DevTube</a>
-      <a class="button" href="upload.html"><span class="material-icons-outlined">upload</span> Upload guide</a>
+  <header class="topbar" aria-label="DevTube upload header">
+    <div class="top-left">
+      <a class="icon-btn" href="index.html" aria-label="Back to home"><span class="material-icons">menu</span></a>
+      <a class="brand" href="index.html"><i class="fa-brands fa-studiovinari"></i><span>DevTube</span></a>
     </div>
+    <div class="top-right">
+      <a class="icon-btn" href="accounts.html" aria-label="Accounts"><span class="material-icons-outlined">account_circle</span></a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="upload-card">
+      <div class="upload-icon"><span class="material-icons-outlined">upload</span></div>
+      <h1>Upload videos to DevTube</h1>
+      <p>Click the upload button below to open the GitHub Videos folder. Upload your `.mp4` file there, then refresh DevTube to auto-sync the video.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://github.com/Anish-Kushwaha/DevTube/tree/main/Videos" target="_blank" rel="noopener"><span class="material-icons-outlined">cloud_upload</span>Upload on GitHub</a>
+        <a class="btn btn-secondary" href="index.html"><span class="material-icons-outlined">home</span>Back to DevTube</a>
+      </div>
+    </section>
+
+    <section class="tips">
+      <h2>Quick steps</h2>
+      <ul>
+        <li>Open the GitHub Videos folder using the Upload button.</li>
+        <li>Add files as <code>Video1.mp4</code>, <code>Video2.mp4</code>, etc.</li>
+        <li>Optionally add matching thumbnails in <code>/thumbnails</code>.</li>
+        <li>Refresh DevTube home page to see auto-synced content.</li>
+      </ul>
+    </section>
   </main>
+
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a href="index.html"><span class="material-icons">home</span><span>Home</span></a>
+    <a href="index.html#shorts"><span class="material-icons-outlined">bolt</span><span>Shorts</span></a>
+    <a class="active" href="upload.html"><span class="material-icons-outlined">add_circle</span><span>Upload</span></a>
+    <a href="channel.html"><span class="material-icons-outlined">subscriptions</span><span>Subs</span></a>
+    <a href="accounts.html"><span class="material-icons-outlined">account_circle</span><span>You</span></a>
+  </nav>
 </body>
 </html>
