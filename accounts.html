@@ -4,114 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f0f0f">
-  <title>DevTube - Accounts</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>DevTube - Account</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    :root { color-scheme: dark; --bg:#0f0f0f; --surface:#181818; --surface-2:#212121; --surface-3:#272727; --text:#f1f1f1; --muted:#aaa; --border:#303030; --brand:#ff0033; --blue:#3ea6ff; }
+    :root { color-scheme: dark; --bg:#0f0f0f; --card:#1f1f1f; --text:#f1f1f1; --muted:#aaa; --border:#333; --brand:#ff0033; --blue:#3ea6ff; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: Roboto, "Segoe UI", Arial, sans-serif; min-height: 100vh; }
-    a { color: inherit; text-decoration: none; }
-
-    .topbar { align-items: center; background: rgba(15,15,15,.98); border-bottom: 1px solid var(--border); display: flex; height: 56px; justify-content: space-between; padding: 0 16px; position: sticky; top: 0; z-index: 20; }
-    .brand { align-items: center; display: inline-flex; font-size: 21px; font-weight: 900; gap: 7px; letter-spacing: -0.6px; }
-    .brand i { color: var(--brand); font-size: 26px; }
-    .top-actions { display: flex; gap: 8px; }
-    .icon-btn { align-items: center; background: transparent; border: 0; border-radius: 50%; color: var(--text); cursor: pointer; display: inline-flex; height: 40px; justify-content: center; width: 40px; }
-    .icon-btn:hover { background: var(--surface-3); }
-
-    .shell { margin: 0 auto; max-width: 760px; padding: 18px 14px 90px; }
-    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-    .panel-header { align-items: center; border-bottom: 1px solid var(--border); display: flex; gap: 14px; padding: 16px; }
-    .panel-header h1 { font-size: 22px; }
-    .panel-sub { color: var(--muted); font-size: 14px; margin-top: 3px; }
-
-    .account-list { display: grid; }
-    .account-item { align-items: center; border-bottom: 1px solid var(--border); display: grid; gap: 12px; grid-template-columns: 54px minmax(0,1fr) auto; padding: 13px 16px; }
-    .account-item:last-child { border-bottom: 0; }
-    .account-item:hover { background: var(--surface-2); }
-    .avatar { align-items: center; border-radius: 50%; color: white; display: inline-flex; font-size: 18px; font-weight: 900; height: 42px; justify-content: center; width: 42px; }
-    .av-1{background:linear-gradient(135deg,#ef4444,#ec4899)} .av-2{background:linear-gradient(135deg,#22c55e,#0ea5e9)} .av-3{background:linear-gradient(135deg,#f59e0b,#f97316)} .av-4{background:linear-gradient(135deg,#8b5cf6,#3b82f6)} .av-5{background:linear-gradient(135deg,#14b8a6,#22c55e)}
-    .name { font-size: 16px; font-weight: 800; }
-    .handle { color: var(--muted); font-size: 13px; margin-top: 2px; }
-    .status { background: rgba(62,166,255,.12); border: 1px solid rgba(62,166,255,.25); border-radius: 999px; color: #c8e6ff; font-size: 12px; font-weight: 700; padding: 6px 10px; }
-    .switch-link { color: var(--blue); font-size: 13px; font-weight: 700; }
-
-    .tools { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; margin-top: 12px; overflow: hidden; }
-    .tool-item { align-items: center; border-bottom: 1px solid var(--border); display: flex; gap: 12px; padding: 14px 16px; }
-    .tool-item:last-child { border-bottom: 0; }
-    .tool-item:hover { background: var(--surface-2); }
-    .tool-item .material-icons-outlined { color: var(--muted); }
-
-    .bottom-nav { background: var(--bg); border-top: 1px solid var(--border); bottom: 0; display: none; height: 64px; left: 0; position: fixed; right: 0; z-index: 30; }
-    .bottom-nav a { align-items: center; color: var(--muted); display: flex; flex: 1; flex-direction: column; font-size: 11px; gap: 2px; justify-content: center; }
-    .bottom-nav a.active { color: var(--text); }
-
-    @media (max-width: 860px) { .bottom-nav { display: flex; } }
+    body { align-items: center; background: radial-gradient(circle at 10% 10%, rgba(255,0,51,.18), transparent 32%), var(--bg); color: var(--text); display: flex; font-family: Roboto, "Segoe UI", Arial, sans-serif; min-height: 100vh; padding: 24px; }
+    main { background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid var(--border); border-radius: 24px; box-shadow: 0 24px 80px rgba(0,0,0,.45); margin: auto; max-width: 760px; padding: clamp(28px, 5vw, 56px); width: 100%; }
+    .logo { align-items: center; color: var(--text); display: inline-flex; font-size: 22px; font-weight: 900; gap: 8px; margin-bottom: 42px; text-decoration: none; }
+    .logo i { color: var(--brand); font-size: 30px; }
+    .icon { color: var(--brand); font-size: 56px; margin-bottom: 18px; }
+    h1 { font-size: clamp(34px, 8vw, 62px); letter-spacing: -2px; line-height: .95; margin-bottom: 16px; }
+    p { color: var(--muted); font-size: 18px; line-height: 1.7; max-width: 620px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    a.button { align-items: center; background: #272727; border-radius: 999px; color: var(--text); display: inline-flex; gap: 8px; padding: 12px 16px; text-decoration: none; }
+    a.button.primary { background: var(--text); color: #0f0f0f; font-weight: 800; }
+    code { background: rgba(255,255,255,.08); border-radius: 6px; padding: 2px 6px; }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="index.html"><i class="fa-brands fa-studiovinari"></i><span>DevTube</span></a>
-    <div class="top-actions">
-      <a class="icon-btn" href="settings.html" aria-label="Settings"><span class="material-icons-outlined">settings</span></a>
-      <a class="icon-btn" href="channel.html" aria-label="Your channel"><span class="material-icons-outlined">account_circle</span></a>
+  <main>
+    <a class="logo" href="index.html"><i class="fa-brands fa-studiovinari"></i><span>DevTube</span></a>
+    <div class="material-icons-outlined icon">manage_accounts</div>
+    <h1>Account</h1>
+    <p>Manage your DevTube identity, sign-in details, and profile links here.</p>
+    <p style="margin-top:14px;">This page is intentionally standalone. Replace or extend this file anytime; <code>index.html</code> checks for it with a HEAD request and marks it live automatically.</p>
+    <div class="actions">
+      <a class="button primary" href="index.html"><span class="material-icons-outlined">home</span> Back to DevTube</a>
+      <a class="button" href="upload.html"><span class="material-icons-outlined">upload</span> Upload guide</a>
     </div>
-  </header>
-
-  <main class="shell">
-    <section class="panel">
-      <div class="panel-header">
-        <span class="material-icons-outlined">manage_accounts</span>
-        <div>
-          <h1>Choose an account</h1>
-          <p class="panel-sub">Switch between DevTube profiles (demo accounts).</p>
-        </div>
-      </div>
-
-      <div class="account-list">
-        <a class="account-item" href="channel.html">
-          <span class="avatar av-1">A</span>
-          <span><span class="name">Anish Kushwaha</span><span class="handle">@Anishkushwaha_dev</span></span>
-          <span class="status">Current</span>
-        </a>
-        <a class="account-item" href="channel.html">
-          <span class="avatar av-2">D</span>
-          <span><span class="name">DevTube Studio</span><span class="handle">@devtube_studio</span></span>
-          <span class="switch-link">Switch</span>
-        </a>
-        <a class="account-item" href="channel.html">
-          <span class="avatar av-3">T</span>
-          <span><span class="name">Tech Bytes India</span><span class="handle">@techbytes_ind</span></span>
-          <span class="switch-link">Switch</span>
-        </a>
-        <a class="account-item" href="channel.html">
-          <span class="avatar av-4">C</span>
-          <span><span class="name">CodeCraft Labs</span><span class="handle">@codecraft_labs</span></span>
-          <span class="switch-link">Switch</span>
-        </a>
-        <a class="account-item" href="channel.html">
-          <span class="avatar av-5">G</span>
-          <span><span class="name">Gaming Loop</span><span class="handle">@gamingloop</span></span>
-          <span class="switch-link">Switch</span>
-        </a>
-      </div>
-    </section>
-
-    <section class="tools">
-      <a class="tool-item" href="upload.html"><span class="material-icons-outlined">person_add</span><span>Add account</span></a>
-      <a class="tool-item" href="settings.html"><span class="material-icons-outlined">manage_accounts</span><span>Manage accounts</span></a>
-      <a class="tool-item" href="index.html"><span class="material-icons-outlined">home</span><span>Back to Home</span></a>
-    </section>
   </main>
-
-  <nav class="bottom-nav" aria-label="Mobile navigation">
-    <a href="index.html"><span class="material-icons">home</span><span>Home</span></a>
-    <a href="index.html#shorts"><span class="material-icons-outlined">bolt</span><span>Shorts</span></a>
-    <a href="upload.html"><span class="material-icons-outlined">add_circle</span><span>Upload</span></a>
-    <a href="channel.html"><span class="material-icons-outlined">subscriptions</span><span>Subs</span></a>
-    <a class="active" href="accounts.html"><span class="material-icons-outlined">account_circle</span><span>You</span></a>
-  </nav>
 </body>
 </html>
